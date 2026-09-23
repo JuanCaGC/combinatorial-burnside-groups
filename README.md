@@ -93,5 +93,4 @@ abandoned in favor of the Table-of-Marks route.
 
 ## License
 
-No license is currently specified (all rights reserved by default). A license such as
-MIT or BSD-3-Clause would need to be added to permit reuse.
+[MIT](LICENSE).
