@@ -1,0 +1,98 @@
+2026/09/23 14:26:57.0989: [4370220]:  WARNING:       mongoc: Falling back to malloc for counters.
+
+START p=2 r=1
+STRUCT p=2 r=1 pairs=1 wall=0.163329584 gap=0.048106208
+BEGIN n=1
+DATA	2	1	1	Z	1	0.163330	0.407197	Z	1
+BEGIN n=2
+DATA	2	1	2	0	1	0.163330	0.000104	0	0
+BEGIN n=3
+DATA	2	1	3	0	1	0.163330	0.000050	0	0
+PROCESS p=2 r=1 exit=0 wall=13.325
+2026/09/23 14:27:11.0306: [4370509]:  WARNING:       mongoc: Falling back to malloc for counters.
+
+START p=2 r=2
+STRUCT p=2 r=2 pairs=7 wall=0.166145708 gap=0.051903583
+BEGIN n=1
+DATA	2	2	1	Z^6	7	0.166146	0.425716	0	0
+BEGIN n=2
+DATA	2	2	2	(Z/2)^2	7	0.166146	0.004204	(Z/2)^2	0
+BEGIN n=3
+DATA	2	2	3	0	7	0.166146	0.000037	0	0
+PROCESS p=2 r=2 exit=0 wall=13.293
+2026/09/23 14:27:24.0606: [4370818]:  WARNING:       mongoc: Falling back to malloc for counters.
+
+START p=2 r=3
+STRUCT p=2 r=3 pairs=50 wall=0.186093292 gap=0.07212475
+BEGIN n=1
+DATA	2	3	1	Z^35	50	0.186093	0.419478	0	0
+BEGIN n=2
+DATA	2	3	2	(Z/2)^28	50	0.186093	0.002742	0	0
+BEGIN n=3
+DATA	2	3	3	(Z/2)^8	50	0.186093	0.002746	(Z/2)^8	0
+PROCESS p=2 r=3 exit=0 wall=13.331
+2026/09/23 14:27:37.0936: [4371144]:  WARNING:       mongoc: Falling back to malloc for counters.
+
+START p=3 r=1
+STRUCT p=3 r=1 pairs=1 wall=0.162168 gap=0.049960125
+BEGIN n=1
+DATA	3	1	1	Z^2	1	0.162168	0.417452	Z^2	2
+BEGIN n=2
+DATA	3	1	2	Z	1	0.162168	0.000128	Z	1
+BEGIN n=3
+DATA	3	1	3	0	1	0.162168	0.000014	0	0
+PROCESS p=3 r=1 exit=0 wall=13.315
+2026/09/23 14:27:51.0253: [4371477]:  WARNING:       mongoc: Falling back to malloc for counters.
+
+START p=3 r=2
+STRUCT p=3 r=2 pairs=9 wall=0.166404292 gap=0.053897458
+BEGIN n=1
+DATA	3	2	1	Z^16	9	0.166404	0.421354	0	0
+BEGIN n=2
+DATA	3	2	2	Z^15	9	0.166404	0.000150	Z^7	7
+BEGIN n=3
+DATA	3	2	3	Z^3	9	0.166404	0.000317	Z^3	3
+PROCESS p=3 r=2 exit=0 wall=13.267
+2026/09/23 14:28:04.0514: [4371828]:  WARNING:       mongoc: Falling back to malloc for counters.
+
+START p=3 r=3
+STRUCT p=3 r=3 pairs=105 wall=0.219580625 gap=0.105507417
+BEGIN n=1
+DATA	3	3	1	Z^156	105	0.219581	0.424335	0	0
+BEGIN n=2
+DATA	3	3	2	Z^260	105	0.219581	0.000306	0	0
+BEGIN n=3
+DATA	3	3	3	Z^144	105	0.219581	0.008972	Z^66	66
+PROCESS p=3 r=3 exit=0 wall=13.335
+2026/09/23 14:28:17.0842: [4372099]:  WARNING:       mongoc: Falling back to malloc for counters.
+
+START p=5 r=1
+STRUCT p=5 r=1 pairs=1 wall=0.1609715 gap=0.048325166
+BEGIN n=1
+DATA	5	1	1	Z^4	1	0.160971	0.414122	Z^4	4
+BEGIN n=2
+DATA	5	1	2	Z^2	1	0.160971	0.000081	Z^2	2
+BEGIN n=3
+DATA	5	1	3	0	1	0.160971	0.000051	0	0
+PROCESS p=5 r=1 exit=0 wall=13.265
+2026/09/23 14:28:31.0112: [4372403]:  WARNING:       mongoc: Falling back to malloc for counters.
+
+START p=5 r=2
+STRUCT p=5 r=2 pairs=13 wall=0.168262208 gap=0.054695959
+BEGIN n=1
+DATA	5	2	1	Z^48	13	0.168262	0.424527	0	0
+BEGIN n=2
+DATA	5	2	2	(Z/5)^2 × Z^70	13	0.168262	0.004265	(Z/5)^2 × Z^46	46
+BEGIN n=3
+DATA	5	2	3	(Z/2)^18 × Z^22	13	0.168262	0.371078	(Z/2)^18 × Z^22	22
+PROCESS p=5 r=2 exit=0 wall=13.659
+2026/09/23 14:28:44.0766: [4372824]:  WARNING:       mongoc: Falling back to malloc for counters.
+
+START p=5 r=3
+STRUCT p=5 r=3 pairs=311 wall=0.347205375 gap=0.234773958
+BEGIN n=1
+DATA	5	3	1	Z^992	311	0.347205	0.428833	0	0
+BEGIN n=2
+DATA	5	3	2	(Z/5)^124 × Z^3348	311	0.347205	0.003047	0	0
+SKIP p=5 r=3 n=3 multisets=333375 scale_limit=100000
+PROCESS p=5 r=3 exit=0 wall=13.465

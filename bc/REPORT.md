@@ -184,6 +184,91 @@ Not independently verified against any published source.
   follows from the fact that every nontrivial abelian subgroup of $\mathrm{AGL}(1,p)$ is
   either the translation subgroup $C_p$ or is contained in a point stabilizer $C_m$.
 
+## $\mathcal{BC}_n(\mathbb F_p^r)$ as a $\mathrm{GL}_r(\mathbb F_p)$-module (Problem 6.1)
+
+For $G=\mathbb F_p^r$ elementary abelian, internal conjugation is trivial, so the
+class-based machinery of Theorem 5.2 carries no symmetry and formula (6.1),
+$\mathcal{BC}_n(G)=\bigoplus_{H'\subseteq G}\bigoplus_{H''\subseteq H'}B_n(H'')$, is the
+right description on its own. The symmetry that does act is $\mathrm{Aut}(G)=\mathrm{GL}_r(\mathbb
+F_p)$, by automorphisms rather than conjugation — directly relevant to the paper's open
+Problem 6.1. This section reports a first, explicitly-scoped computational exploration
+of that action, done in two passes: a derivation done by hand before any code was written
+(`gl_module_notes.md`, not committed), and a computation dispatched separately and then
+independently re-verified (below). It is a beginning, not a resolution of Problem 6.1.
+
+**What was established analytically first.** $\mathrm{Aut}(G)$ preserves each of the
+defining relations (O), (V), (B2) of $B_n(H)$ for $H=G$, and permutes the $[H,Y]$-classes of
+Theorem 5.2, so it acts on all of $\mathcal{BC}_n(G)$, not just summand-by-summand. For a
+fixed subspace dimension $m$, $\mathrm{GL}_r(\mathbb F_p)$ acts transitively on the
+$m$-dimensional subspaces $H''\subseteq G$, with stabilizer a parabolic subgroup $P_m$ whose
+unipotent radical acts trivially on $H''$ itself (a direct block-matrix check). This means the
+graded piece of formula (6.1) at dimension $m$ is an induced module
+$\mathrm{Ind}_{P_m}^{\mathrm{GL}_r(\mathbb F_p)}$ of a module inflated from $\mathrm{GL}_m(\mathbb
+F_p)$ — a real structural reduction, though dimension-counting alone cannot test it and no
+attempt was made to verify it beyond the $m=r$ (full space) case below.
+
+**Raw data (new, computed, not independently verified against any external source
+except where noted).** $\mathcal{BC}_n(\mathbb F_p^r)$ for $p\in\{2,3,5\}$, $r\in\{1,2,3\}$,
+$n\in\{1,2,3\}$, via the existing `bc(bc_structure(G),n)` route (26 of 27 grid points; $(p,r,n)=(5,3,3)$
+skipped as it would need $\binom{125+2}{3}=333{,}375$ generator candidates, beyond what this
+codebase's generator-elimination approach handles — see Performance above). Four points were
+independently spot-checked here by direct recomputation and matched exactly:
+$\mathcal{BC}_2(\mathbb F_3^2)=\mathbb Z^{15}$, $\mathcal{BC}_3(\mathbb F_3^2)=\mathbb Z^3$,
+$\mathcal{BC}_2(\mathbb F_5^2)=(\mathbb Z/5)^2\times\mathbb Z^{70}$,
+$\mathcal{BC}_3(\mathbb F_3^3)=\mathbb Z^{144}$. The full table, the $\{\pm1\}$- and
+full-$\mathbb F_p^\times$-quotient comparisons for $r=1$ (which agree with the existing $D_p$
+and $S_3$ data already in this report), and the dimension-arithmetic scan against
+$\mathrm{Sym}^k$, $\Lambda^k$ and the Steinberg dimension $p^{m(m-1)/2}$ (window $k=0,\dots,6$)
+are in `gl_data_output.txt`, `gl_cyclic_output.txt`, `gl_dimensions_output.txt`. The dimension
+scan found no coherent recognition pattern: matches occur only in low rank ($\le 7$) and are
+attributable to $\mathrm{Sym}^k$ in dimension $m=2$ matching *any* positive integer for some
+$k$, not to a real correspondence; it was also noted, correctly, that a free-rank comparison
+alone cannot rule out a match for a torsion group, since tensoring with $\mathbb F_p$ adds a
+dimension for each $p$-primary cyclic factor, so this scan is a weak negative result at best,
+not a search over all of formula (6.1)'s pieces.
+
+**The one positive structural finding.** For $p=2,r=2,n=2$: $\mathcal{BC}_2(\mathbb
+F_2^2)=(\mathbb Z/2)^2$ is entirely the top piece $H=Y=G$, i.e. $B_2(\mathbb F_2^2)$ itself
+(after its own defining quotient). The explicit action of $\mathrm{GL}_2(\mathbb F_2)\cong S_3$
+on this 2-dimensional $\mathbb F_2$-space was computed by tracking the existing
+generator-elimination/Smith-normal-form pipeline through an automorphism (not just its effect
+on the final invariant factors), producing genuine $3\times3$ and $24\times24$ intermediate
+data reduced to $2\times2$ and $7\times7$ final action matrices for $p=2$ and $p=3$
+respectively. For $p=2$, an explicit invertible intertwiner $W=\begin{pmatrix}1&1\\1&0\end{pmatrix}$
+over $\mathbb F_2$ satisfies $R_gW=W(g^{-T})^T$ for all three generators of
+$\mathrm{GL}_2(\mathbb F_2)$, i.e. $B_2(\mathbb F_2^2)$ is isomorphic, as a
+$\mathrm{GL}_2(\mathbb F_2)$-module, to the contragredient of the natural module. This was
+re-derived independently here from first principles (the character-permutation induced by the
+generating matrices $T=\begin{pmatrix}1&1\\0&1\end{pmatrix}$ and
+$S=\begin{pmatrix}0&1\\1&0\end{pmatrix}$, computed using the same $M^{-T}$ convention the
+existing code already requires), and the reported action matrices for $T$ and $S$ were checked
+by hand to satisfy the correct $S_3$ relations ($T^2=S^2=I$, $(TS)^3=I$). For $p=3$, rank
+$7$, the analogous matrices were computed and checked (Smith-normal-form certificate,
+group-relation products) but the module was not identified with a named representation; this
+negative result is reported as such, not forced.
+
+**A correction to the exploration's own working assumptions, found and fixed during the
+computation.** The originally proposed generators $T$ (a transvection) and a diagonal matrix
+$D$ do not generate $\mathrm{GL}_2(\mathbb F_p)$ — they share an invariant line, giving
+$|\langle T,D\rangle|=2$ at $p=2$ and $6$ at $p=3$, against $|\mathrm{GL}_2(\mathbb
+F_2)|=6$ and $|\mathrm{GL}_2(\mathbb F_3)|=48$. Adding the swap $S$ repairs this. Verified
+independently here in a fresh GAP session for both primes.
+
+**On tooling.** No GAP package is literally named `meataxe`; but GAP's built-in `MTX`
+functionality (composition factors, Brauer characters, decomposition matrices) is present and
+was exercised successfully — confirmed independently here by running
+`MTX.CompositionFactors` on the natural $\mathrm{GL}_2(\mathbb F_2)$-module and obtaining a
+single irreducible factor of dimension 2, matching what was reported. This resolves the
+concern raised in the planning notes (`gl_module_notes.md` §5) that module-recognition
+machinery might not be available in this environment: it is available, under GAP's own name
+for it rather than the package name assumed going in.
+
+**Scope.** This is Priority 1/1b/3 data plus one fully worked, independently-checked example
+($p=2$), not a general answer to Problem 6.1. Not attempted: $r=3$ actions, $m<r$ induced
+pieces, ring multiplication, or classifying the $p=3$ rank-7 module. See `gl_module_notes.md`
+for the parabolic-induction argument and `gl_module_codex_report.md` for the full computational
+log (raw tables, GAP/Python output, Smith-normal-form certificates).
+
 ## Not done / not verified
 
 * The map $\mathrm{Burn}_2(G)\to\mathcal{BC}_2(G)$ and the specific class distinguishing
@@ -197,6 +282,9 @@ Not independently verified against any published source.
   2-torsion class".
 * The restriction maps $\mathrm{res}^G_{G'}$ and the ring structure on
   $\mathcal{BC}_*(G)$ (§4 of the paper) are not implemented.
+* The $\mathrm{GL}_r(\mathbb F_p)$-module structure of $\mathcal{BC}_n(\mathbb F_p^r)$
+  (Problem 6.1) is worked out for one case only ($p=2,r=2,n=2$); $r=3$ actions, induced
+  pieces with $m<r$, and the $p=3$ rank-7 module's identity are open.
 * The definition-level cross-check only covers $|G|\lesssim700$ and small $n$ — much
   slower than the Theorem-5.2-based route.
 

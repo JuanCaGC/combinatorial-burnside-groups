@@ -1,0 +1,27 @@
+DIM p=2 m=1 n=1 top=Z rank=1 Sym(k=0..6)=[1, 1, 1, 1, 1, 1, 1] Lambda(k=0..6)=[1, 1, 0, 0, 0, 0, 0] St=1 matches_Sym=[0, 1, 2, 3, 4, 5, 6] matches_Lambda_nonzero=[0, 1] match_St=True
+DIM p=2 m=1 n=2 top=0 rank=0 Sym(k=0..6)=[1, 1, 1, 1, 1, 1, 1] Lambda(k=0..6)=[1, 1, 0, 0, 0, 0, 0] St=1 matches_Sym=[] matches_Lambda_nonzero=[] match_St=False
+DIM p=2 m=1 n=3 top=0 rank=0 Sym(k=0..6)=[1, 1, 1, 1, 1, 1, 1] Lambda(k=0..6)=[1, 1, 0, 0, 0, 0, 0] St=1 matches_Sym=[] matches_Lambda_nonzero=[] match_St=False
+DIM p=2 m=2 n=1 top=0 rank=0 Sym(k=0..6)=[1, 2, 3, 4, 5, 6, 7] Lambda(k=0..6)=[1, 2, 1, 0, 0, 0, 0] St=2 matches_Sym=[] matches_Lambda_nonzero=[] match_St=False
+DIM p=2 m=2 n=2 top=(Z/2)^2 rank=0 Sym(k=0..6)=[1, 2, 3, 4, 5, 6, 7] Lambda(k=0..6)=[1, 2, 1, 0, 0, 0, 0] St=2 matches_Sym=[] matches_Lambda_nonzero=[] match_St=False
+DIM p=2 m=2 n=3 top=0 rank=0 Sym(k=0..6)=[1, 2, 3, 4, 5, 6, 7] Lambda(k=0..6)=[1, 2, 1, 0, 0, 0, 0] St=2 matches_Sym=[] matches_Lambda_nonzero=[] match_St=False
+DIM p=2 m=3 n=1 top=0 rank=0 Sym(k=0..6)=[1, 3, 6, 10, 15, 21, 28] Lambda(k=0..6)=[1, 3, 3, 1, 0, 0, 0] St=8 matches_Sym=[] matches_Lambda_nonzero=[] match_St=False
+DIM p=2 m=3 n=2 top=0 rank=0 Sym(k=0..6)=[1, 3, 6, 10, 15, 21, 28] Lambda(k=0..6)=[1, 3, 3, 1, 0, 0, 0] St=8 matches_Sym=[] matches_Lambda_nonzero=[] match_St=False
+DIM p=2 m=3 n=3 top=(Z/2)^8 rank=0 Sym(k=0..6)=[1, 3, 6, 10, 15, 21, 28] Lambda(k=0..6)=[1, 3, 3, 1, 0, 0, 0] St=8 matches_Sym=[] matches_Lambda_nonzero=[] match_St=False
+DIM p=3 m=1 n=1 top=Z^2 rank=2 Sym(k=0..6)=[1, 1, 1, 1, 1, 1, 1] Lambda(k=0..6)=[1, 1, 0, 0, 0, 0, 0] St=1 matches_Sym=[] matches_Lambda_nonzero=[] match_St=False
+DIM p=3 m=1 n=2 top=Z rank=1 Sym(k=0..6)=[1, 1, 1, 1, 1, 1, 1] Lambda(k=0..6)=[1, 1, 0, 0, 0, 0, 0] St=1 matches_Sym=[0, 1, 2, 3, 4, 5, 6] matches_Lambda_nonzero=[0, 1] match_St=True
+DIM p=3 m=1 n=3 top=0 rank=0 Sym(k=0..6)=[1, 1, 1, 1, 1, 1, 1] Lambda(k=0..6)=[1, 1, 0, 0, 0, 0, 0] St=1 matches_Sym=[] matches_Lambda_nonzero=[] match_St=False
+DIM p=3 m=2 n=1 top=0 rank=0 Sym(k=0..6)=[1, 2, 3, 4, 5, 6, 7] Lambda(k=0..6)=[1, 2, 1, 0, 0, 0, 0] St=3 matches_Sym=[] matches_Lambda_nonzero=[] match_St=False
+DIM p=3 m=2 n=2 top=Z^7 rank=7 Sym(k=0..6)=[1, 2, 3, 4, 5, 6, 7] Lambda(k=0..6)=[1, 2, 1, 0, 0, 0, 0] St=3 matches_Sym=[6] matches_Lambda_nonzero=[] match_St=False
+DIM p=3 m=2 n=3 top=Z^3 rank=3 Sym(k=0..6)=[1, 2, 3, 4, 5, 6, 7] Lambda(k=0..6)=[1, 2, 1, 0, 0, 0, 0] St=3 matches_Sym=[2] matches_Lambda_nonzero=[] match_St=True
+DIM p=3 m=3 n=1 top=0 rank=0 Sym(k=0..6)=[1, 3, 6, 10, 15, 21, 28] Lambda(k=0..6)=[1, 3, 3, 1, 0, 0, 0] St=27 matches_Sym=[] matches_Lambda_nonzero=[] match_St=False
+DIM p=3 m=3 n=2 top=0 rank=0 Sym(k=0..6)=[1, 3, 6, 10, 15, 21, 28] Lambda(k=0..6)=[1, 3, 3, 1, 0, 0, 0] St=27 matches_Sym=[] matches_Lambda_nonzero=[] match_St=False
+DIM p=3 m=3 n=3 top=Z^66 rank=66 Sym(k=0..6)=[1, 3, 6, 10, 15, 21, 28] Lambda(k=0..6)=[1, 3, 3, 1, 0, 0, 0] St=27 matches_Sym=[] matches_Lambda_nonzero=[] match_St=False
+DIM p=5 m=1 n=1 top=Z^4 rank=4 Sym(k=0..6)=[1, 1, 1, 1, 1, 1, 1] Lambda(k=0..6)=[1, 1, 0, 0, 0, 0, 0] St=1 matches_Sym=[] matches_Lambda_nonzero=[] match_St=False
+DIM p=5 m=1 n=2 top=Z^2 rank=2 Sym(k=0..6)=[1, 1, 1, 1, 1, 1, 1] Lambda(k=0..6)=[1, 1, 0, 0, 0, 0, 0] St=1 matches_Sym=[] matches_Lambda_nonzero=[] match_St=False
+DIM p=5 m=1 n=3 top=0 rank=0 Sym(k=0..6)=[1, 1, 1, 1, 1, 1, 1] Lambda(k=0..6)=[1, 1, 0, 0, 0, 0, 0] St=1 matches_Sym=[] matches_Lambda_nonzero=[] match_St=False
+DIM p=5 m=2 n=1 top=0 rank=0 Sym(k=0..6)=[1, 2, 3, 4, 5, 6, 7] Lambda(k=0..6)=[1, 2, 1, 0, 0, 0, 0] St=5 matches_Sym=[] matches_Lambda_nonzero=[] match_St=False
+DIM p=5 m=2 n=2 top=(Z/5)^2 × Z^46 rank=46 Sym(k=0..6)=[1, 2, 3, 4, 5, 6, 7] Lambda(k=0..6)=[1, 2, 1, 0, 0, 0, 0] St=5 matches_Sym=[] matches_Lambda_nonzero=[] match_St=False
+DIM p=5 m=2 n=3 top=(Z/2)^18 × Z^22 rank=22 Sym(k=0..6)=[1, 2, 3, 4, 5, 6, 7] Lambda(k=0..6)=[1, 2, 1, 0, 0, 0, 0] St=5 matches_Sym=[] matches_Lambda_nonzero=[] match_St=False
+DIM p=5 m=3 n=1 top=0 rank=0 Sym(k=0..6)=[1, 3, 6, 10, 15, 21, 28] Lambda(k=0..6)=[1, 3, 3, 1, 0, 0, 0] St=125 matches_Sym=[] matches_Lambda_nonzero=[] match_St=False
+DIM p=5 m=3 n=2 top=0 rank=0 Sym(k=0..6)=[1, 3, 6, 10, 15, 21, 28] Lambda(k=0..6)=[1, 3, 3, 1, 0, 0, 0] St=125 matches_Sym=[] matches_Lambda_nonzero=[] match_St=False
+EXIT 0

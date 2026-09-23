@@ -1,0 +1,2 @@
+PYTHON VERIFIED p=2: independent unordered-basis enumeration and blow-up rows; full/residual Smith certificates with unimodular transforms; inverse quotient maps; 3 action matrices; all 18 composition checks. Group order=6.
+PYTHON VERIFIED p=3: independent unordered-basis enumeration and blow-up rows; full/residual Smith certificates with unimodular transforms; inverse quotient maps; 3 action matrices; all 144 composition checks. Group order=48.

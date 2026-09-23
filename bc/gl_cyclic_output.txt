@@ -1,0 +1,16 @@
+2026/09/23 14:29:07.0696: [4373347]:  WARNING:       mongoc: Falling back to malloc for counters.
+
+ACTION p=2 primitive_root=1 generator=[1, 2] full=[[1, 2]] neg=[[1, 2]]
+CYCLIC	2	1	Z	Z	Z	0.389649
+CYCLIC	2	2	0	0	0	0.000063
+CYCLIC	2	3	0	0	0	0.000052
+ACTION p=3 primitive_root=2 generator=[1, 3, 2] full=[[1, 2, 3], [1, 3, 2]] neg=[[1, 2, 3], [1, 3, 2]]
+CYCLIC	3	1	Z^2	Z	Z	0.000009
+CYCLIC	3	2	Z	Z/2	Z/2	0.000084
+CYCLIC	3	3	0	0	0	0.000030
+ACTION p=5 primitive_root=2 generator=[1, 3, 5, 2, 4] full=[[1, 2, 3, 4, 5], [1, 3, 5, 2, 4], [1, 4, 2, 5, 3], [1, 5, 4, 3, 2]] neg=[[1, 2, 3, 4, 5], [1, 5, 4, 3, 2]]
+CYCLIC	5	1	Z^4	Z^2	Z	0.000010
+CYCLIC	5	2	Z^2	(Z/2)^2	Z/2	0.002180
+CYCLIC	5	3	0	0	0	0.000182
+CHECK: all six n=2 guide comparisons passed; minus-one closure contained in full closure
+EXIT 0
