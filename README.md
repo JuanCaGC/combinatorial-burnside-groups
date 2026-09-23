@@ -59,9 +59,8 @@ bc(st, 2)                            # BC_2(A6) = ...
 | `bc/validate_tomlib.jl` | cross-checks `bc_structure_tom.g` against `bc_structure.g` |
 | `bc/verify_certificates.jl` | independently verifies the Smith-normal-form certificate (does not call the routine it is certifying) |
 | `bc/scaling.jl`, `bc/scaling_log.txt` | timing probes for larger groups |
-| `bc/REPORT.md` | validation report: what matches, what doesn't, how far the implementation scales |
+| `bc/REPORT.md` | validation report: method, results, correctness notes, performance |
 | `bc/validation_output.txt` | full transcript of a `validate.jl all` run |
-| `bc/CODEX_LOG.md` | development log for work done with AI coding-agent assistance (see below) |
 
 ## Known limitations
 
@@ -69,7 +68,7 @@ bc(st, 2)                            # BC_2(A6) = ...
   (`bc_structure_tom.g` fixes the subgroup-*enumeration* step using GAP's Table of Marks
   library, but the full per-subgroup computation for $\mathrm{Sym}_9$ still takes on the
   order of a minute, and does not finish within a few minutes for $\mathrm{Sym}_{10},
-  \mathrm{Sym}_{11}$ — see `bc/CODEX_LOG.md` for the detailed timing breakdown).
+  \mathrm{Sym}_{11}$ — see `bc/REPORT.md` for the detailed timing breakdown).
 - The number of generators of $\mathcal{B}_n(H)$ grows as $\binom{|H|+n-1}{n}$ before
   relations are imposed; this becomes impractical past roughly $10^5$.
 - The restriction maps $\mathrm{res}^G_{G'}$, the ring structure on
@@ -78,13 +77,13 @@ bc(st, 2)                            # BC_2(A6) = ...
 
 ## Development notes
 
-Some implementation work in this repository (the Smith-normal-form certificate, the
-Table-of-Marks-based enumerator, and an abandoned attempt at a direct combinatorial
-classification of abelian subgroups of $\mathrm{Sym}_n$ that turned out to be
-mathematically incomplete) was carried out with the assistance of AI coding agents
-(Claude Code, OpenAI Codex), under review and independent re-verification at each step.
-[`bc/CODEX_LOG.md`](bc/CODEX_LOG.md) records what was tried, what worked, what didn't, and
-why, including the abandoned attempt and the reasoning behind it.
+Some implementation work in this repository (the Smith-normal-form certificate and the
+Table-of-Marks-based enumerator) was carried out with the assistance of AI coding agents
+(Claude Code, OpenAI Codex), under review and independent re-verification at each step —
+every value reported in `bc/REPORT.md` was re-checked directly, not taken on the agents'
+word. An earlier attempt at a direct combinatorial classification of abelian subgroups of
+$\mathrm{Sym}_n$ turned out to be mathematically incomplete (see `bc/REPORT.md`, "Enumerating
+abelian subgroups of large $S_n$") and was abandoned in favor of the Table-of-Marks route.
 
 ## License
 

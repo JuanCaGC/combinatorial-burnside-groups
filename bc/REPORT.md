@@ -1,121 +1,196 @@
-# Combinatorial Burnside groups BC_n(G) in Julia/OSCAR — validation report
+# Combinatorial Burnside groups $\mathcal{BC}_n(G)$ — validation report
 
-Paper: Tschinkel–Yang–Zhang, *Combinatorial Burnside groups*, arXiv:2112.12801 (`paper.pdf`).
+Paper: Tschinkel–Yang–Zhang, *Combinatorial Burnside groups*, [arXiv:2112.12801](https://arxiv.org/abs/2112.12801).
 Stack: Julia 1.12.4, OSCAR 1.8.2 (GAP 4 via GAP.jl, Nemo/FLINT for Smith normal form).
 
-## Files
+## Summary
 
-| file | purpose |
-|---|---|
-| `BurnsideC.jl` | the implementation (module `BurnsideC`) |
-| `bc_structure.g` | ~60 lines of GAP: classes of `[H,Y]`, action of `N_G(H)∩N_G(Y)` on `H` |
-| `validate.jl` | every number from the paper, side by side; also `crosscheck`, `demo`, `full`, `all` |
-| `scaling.jl`, `scaling_log.txt` | timing probes |
-| `validation_output.txt` | full transcript of `validate.jl all` (86 checks in total, 0 failures) |
+Every value of $\mathcal{BC}_n(G)$ published in the paper that could be located there — 86
+checks, spanning Sections 4 and 6.2–6.5 — is reproduced exactly. Two independent
+implementations (one following Theorem 5.2's decomposition, one built directly from the
+definition, sharing no code path) agree with each other and with the paper on every case
+tested. A separately verifiable certificate is available for the linear-algebra step, so a
+specific claimed result can be checked without trusting this code or the Smith-normal-form
+library it calls. See `README.md` for the full repository layout and quick-start commands.
 
-```
-julia --project=. validate.jl            # quick tier: all published values up to S6   (~16 s incl. startup)
-julia --project=. validate.jl demo       # C2×S3 per-[H,Y] table (paper §6.5)
-julia --project=. validate.jl crosscheck # Theorem 5.2 code vs. the definition (C),(V),(B2)
-julia --project=. validate.jl full       # + S7, S8
-```
-API: `st = bc_structure(G)` (GAP part, once per group), then `bc(st, n)` for any `n`; or `bc(G, n)`.
-`G` may be any OSCAR permutation/matrix group or a raw GAP group.
+## Method
 
-## How it computes
+For a finite group $G$ and $n\ge1$, Theorem 5.2 of the paper (with Lemma 5.1) gives
+$$\mathcal{BC}_n(G) \cong \bigoplus_{[H,Y]} \mathcal{B}_n(H)/(C_{(H,Y)}),$$
+summed over $G$-conjugacy classes of pairs $(H,Y)$ with $H\subseteq G$ abelian nontrivial
+and $H\subseteq Y\subseteq Z_G(H)$, where $(C_{(H,Y)})$ is the relation $\beta=\beta^g$ for
+$g\in N_G(H)\cap N_G(Y)$.
 
-`BC_n(G) = ⊕_{[H,Y]} B_n(H)/(C_(H,Y))` (Thm 5.2 / Lemma 5.1).
+1. **GAP**: `ConjugacyClassesSubgroups` enumerates nontrivial abelian $H$ up to conjugacy;
+   `IntermediateSubgroups(Z_G(H), H)` enumerates candidate $Y$; `Orbits` under $N_G(H)$
+   groups these into classes $[H,Y]$; the stabilizer $N_G(H)\cap N_G(Y)$ acts on
+   $H=\langle g_1\rangle\times\cdots\times\langle g_k\rangle$, recorded as integer matrices.
+2. **Julia**: a generator of $\mathcal{B}_n(H)$ is an unordered $n$-tuple of characters of
+   $H$ (zeros allowed, as padding) that generate $H^\vee$. Relations (as in the proof of
+   Lemma 5.1): (B) $\beta=\beta_1+\beta_2$ for distinct nonzero $b_i\neq b_j$;
+   $(b,b,\dots)=(0,b,\dots)$; (V) $b_i+b_j=0 \Rightarrow \beta=0$ (this also applies to a
+   repeated character of order 2); (C) $\beta=\beta^g$ for $g$ in the stabilizer.
+3. The relations form an integer matrix; its cokernel is computed by eliminating
+   coefficient-$\pm1$ relations first, then a Smith normal form (Nemo/FLINT) on the
+   (typically much smaller) remainder. Results are converted to the primary-decomposition
+   notation used in the paper.
+4. Results are summed over all classes $[H,Y]$, and cached by the isomorphism type of $H$
+   together with the image of the stabilizer in $\mathrm{Aut}(H)$.
 
-1. GAP: `ConjugacyClassesSubgroups` → nontrivial abelian `H`; `IntermediateSubgroups(Z_G(H), H)` → `Y`;
-   `Orbits(N_G(H), Y's)` → classes `[H,Y]`; stabiliser `N_G(H)∩N_G(Y)` acts on
-   `H = ⟨g_1⟩×…×⟨g_k⟩` by integer matrices.
-2. Julia: generators of `B_n(H)` are multisets of `n` characters of `H` (zeros allowed = padding) that generate `H^∨`.
-   Relations (Lemma 5.1): (B) `β=β₁+β₂` for `b_i≠b_j` nonzero; `(b,b,…)=(0,b,…)`; (V) `b_i+b_j=0 ⇒ β=0`
-   (also for repeated 2-torsion `b`); (C) `β=β^g`.
-3. Cokernel: sparse elimination of ±1 pivots, then Smith normal form over ℤ (Nemo). Results are stored in the
-   paper's primary-decomposition notation (`(Z/2)^6 × Z/4`), and invariant factors are available.
-4. Results per `[H,Y]` are cached by `(H, image of stabiliser in Aut(H), n)`.
+## Independent verification
 
-## Independent check of the implementation
+A second implementation builds $\mathcal{BC}_n(G)$ directly from the definition — symbols
+$(H,Y,\beta)$ over *all* abelian $H$ and *all* $Y$, not up to conjugacy — and imposes (O),
+(C), (V), (B2) including the $\Theta_2$ term ($\bar H=\ker(b_1-b_2)$,
+$\bar\beta=\beta|_{\bar H}$, present unless some $b_k\in\langle b_1-b_2\rangle$). This does
+not use Theorem 5.2 at all, and is only practical for small groups. It agrees with the
+Theorem-5.2-based implementation in all 31 `(group, n)` cases tried: $S_3, S_4, D_4, D_5,
+C_2\times S_3, A_5, S_5, S_6, D_4\times C_3, C_6\times C_6, S_3\times S_3$, for $n$ up to 4
+where feasible. Separately, five further tests confirm that adding the paper's relation
+(4.3) (vanishing on any nonempty sub-sum of characters summing to zero) never changes a
+result — consistent with (4.3) being redundant given (V) and (B2).
 
-`bc_direct(G, n)` does **not** use Theorem 5.2. It builds SC_n(G) on all triples `(H,Y,β)` (all abelian `H`,
-all `Y`, not up to conjugacy) and imposes (O), (C), (V) and (B2) **including the Θ₂ term** (`H̄=ker(b₁−b₂)`,
-`β̄=β|_H̄`, present iff no `b_k ∈ ⟨b₁−b₂⟩`). It agrees with the Theorem-5.2 code in all 31 (group, n) cases
-tried (S₃, S₄, D₄, D₅, C₂×S₃, A₅, S₅, S₆, D₄×C₃, C₆×C₆, S₃×S₃; n = 1…4 where feasible). Separately, 5 further tests confirm that
-adding the "any sub-sum vanishes" relation (paper (4.3)) changes nothing.
+## Validation results
 
-## Validation targets
+Every value below was compared programmatically (structural `AbGroup` equality, not string
+matching, so e.g. $\mathbb Z/10$ and $\mathbb Z/2\times\mathbb Z/5$ count as equal) against
+the value printed in the paper.
 
-All values below are produced by the code and compared programmatically (`AbGroup` equality) to the paper's string.
-
-| target | computed | paper | |
+| target | computed | paper's value | |
 |---|---|---|---|
-| BC₂(S₃) | Z/2 | Z/2 | ✅ |
-| BC₂(S₄) | (Z/2)³ | (Z/2)³ | ✅ (classes (C₃,C₃),(K₄,K₄),(C₄,C₄), each Z/2, as in §6.3) |
-| BC₂(S₅) | (Z/2)⁶ × Z/4 | same | ✅ |
-| BC₂(S₆) | (Z/2)³¹ × (Z/4)³ × Z/8 | same | ✅ |
-| BC₃(S₆) | (Z/2)⁵ × Z/4 | same | ✅ |
-| BC₂(S₇), BC₃(S₇) | (Z/2)⁵⁷×(Z/4)¹²×(Z/8)²×Z/3 ; (Z/2)¹⁶×Z/4 | same | ✅ |
-| BC₂(S₈), BC₃(S₈) | (Z/2)²⁹⁰×(Z/4)³⁰×(Z/8)⁶×Z/16×(Z/3)²×Z ; (Z/2)¹²²×(Z/4)⁴×Z/8×Z | same | ✅ |
-| BC₂(A₅) | (Z/2)³, from [(C₃,C₃)]=Z/2 and [(C₅,C₅)]=(Z/2)² | same | ✅ |
-| BC_n(A₅), n=3,…,9 | 0 | 0 | ✅ and, by the explicit bound n ≥ ℓ+a−1 = 9 deduced from the proof of Prop. 4.1 (see guia/02 §4.4), this covers **all** n ≥ 3 |
-| **BC₂(C₂×S₃)** | **(Z/2)⁵ × Z/4** | same | ✅ |
-| its decomposition | [(H₁,H₁)]=Z/2, [(H₂,H₂)]=(Z/2)², [(H₁,H₃)]=Z/2, [(H₃,H₃)]=Z/2×Z/4; the other 8 classes are 0 | same (§6.5) | ✅ |
-| BC₃(C₂×S₃) | 0 | 0 | ✅ |
-| BC₂(D_p), p = 5 | (Z/2)² | formula gives Z⁰ × (Z/2)¹ × Z/2 = (Z/2)² | ✅ |
-| BC₂(D_p), p = 7, 11, 13, 17, 19, 23, 31, 101 | match the formula, e.g. D₁₁: Z × (Z/2)⁵ × Z/5; D₁₃: Z² × (Z/2)⁶ × Z/7 | Z^((p−5)(p−7)/24) × (Z/2)^((p−3)/2) × Z/((p²−1)/12) | ✅ (formula is "experimental" in the paper) |
-| BC₂(C₃) | Z | Z (§4) | ✅ |
-| BC₂(D₄) | (Z/2)³ | (Z/2)³ | ✅ |
-| BC₂, BC₃(He₃) | Z²⁶ ; Z⁴ | same | ✅ |
-| BC₂, BC₃(He₅) | Z¹²⁴ ; (Z/2)³⁶ × Z³⁶ | same | ✅ |
-| #[H,Y] classes for He_p | (3p+5) with \|H\|=p, (p+1) with \|H\|=p² (p=3,5) | §6.2 | ✅ |
-| ASL(2,3): BC₂, BC₃, BC₄, BC₅ | (Z/2)⁷×Z¹³ ; Z/2×Z ; 0 ; 0 | same | ✅ |
-| PSL(2,7): BC₂, BC₃, BC₄ | (Z/2)³×Z ; Z/2 ; 0 | same | ✅ |
-| A₆: BC₂, BC₃, BC₄ | (Z/2)⁷×Z/4×Z ; Z/2×Z ; 0 | same | ✅ (PSL(2,9) built independently gives the same) |
+| $\mathcal{BC}_2(S_3)$ | $\mathbb Z/2$ | $\mathbb Z/2$ | matches |
+| $\mathcal{BC}_2(S_4)$ | $(\mathbb Z/2)^3$ | same | matches (classes $(C_3,C_3),(K_4,K_4),(C_4,C_4)$, each $\mathbb Z/2$, as in §6.3) |
+| $\mathcal{BC}_2(S_5)$ | $(\mathbb Z/2)^6\times\mathbb Z/4$ | same | matches |
+| $\mathcal{BC}_2(S_6)$ | $(\mathbb Z/2)^{31}\times(\mathbb Z/4)^3\times\mathbb Z/8$ | same | matches |
+| $\mathcal{BC}_3(S_6)$ | $(\mathbb Z/2)^5\times\mathbb Z/4$ | same | matches |
+| $\mathcal{BC}_2(S_7), \mathcal{BC}_3(S_7)$ | $(\mathbb Z/2)^{57}(\mathbb Z/4)^{12}(\mathbb Z/8)^2\mathbb Z/3$ ; $(\mathbb Z/2)^{16}\mathbb Z/4$ | same | matches |
+| $\mathcal{BC}_2(S_8), \mathcal{BC}_3(S_8)$ | $(\mathbb Z/2)^{290}(\mathbb Z/4)^{30}(\mathbb Z/8)^6\mathbb Z/16(\mathbb Z/3)^2\mathbb Z$ ; $(\mathbb Z/2)^{122}(\mathbb Z/4)^4\mathbb Z/8\,\mathbb Z$ | same | matches |
+| $\mathcal{BC}_2(A_5)$ | $(\mathbb Z/2)^3$, from $[(C_3,C_3)]=\mathbb Z/2$ and $[(C_5,C_5)]=(\mathbb Z/2)^2$ | same | matches |
+| $\mathcal{BC}_n(A_5)$, $n=3,\dots,9$ | $0$ | $0$ | matches; the bound $n\ge\ell+a-1=9$ deduced from the proof of Prop. 4.1 ($\ell,a$ = max element order, max abelian-subgroup order) makes this cover **all** $n\ge3$, not just the range tested |
+| $\mathcal{BC}_2(C_2\times S_3)$ | $(\mathbb Z/2)^5\times\mathbb Z/4$ | same | matches |
+| — its decomposition | $[(H_1,H_1)]=\mathbb Z/2$, $[(H_2,H_2)]=(\mathbb Z/2)^2$, $[(H_1,H_3)]=\mathbb Z/2$, $[(H_3,H_3)]=\mathbb Z/2\times\mathbb Z/4$; remaining 8 classes are 0 | same (§6.5) | matches |
+| $\mathcal{BC}_3(C_2\times S_3)$ | $0$ | $0$ | matches |
+| $\mathcal{BC}_2(D_p)$, $p=5$ | $(\mathbb Z/2)^2$ | formula gives $\mathbb Z^0\times(\mathbb Z/2)^1\times\mathbb Z/2$ | matches |
+| $\mathcal{BC}_2(D_p)$, $p=7,11,13,17,19,23,31,101$ | matches formula for every $p$ | $\mathbb Z^{(p-5)(p-7)/24}(\mathbb Z/2)^{(p-3)/2}\mathbb Z/\tfrac{p^2-1}{12}$ | matches (paper states this formula as experimental) |
+| $\mathcal{BC}_2(C_3)$ | $\mathbb Z$ | $\mathbb Z$ (§4) | matches |
+| $\mathcal{BC}_2(D_4)$ | $(\mathbb Z/2)^3$ | same | matches |
+| $\mathcal{BC}_2,\mathcal{BC}_3(\mathfrak{He}_3)$ | $\mathbb Z^{26}$ ; $\mathbb Z^4$ | same | matches |
+| $\mathcal{BC}_2,\mathcal{BC}_3(\mathfrak{He}_5)$ | $\mathbb Z^{124}$ ; $(\mathbb Z/2)^{36}\mathbb Z^{36}$ | same | matches |
+| class counts for $\mathfrak{He}_p$ | $3p+5$ classes with $|H|=p$, $p+1$ with $|H|=p^2$, for $p=3,5$ | §6.2 formula | matches |
+| $\mathrm{ASL}_2(\mathbb F_3)$: $\mathcal{BC}_2,\dots,\mathcal{BC}_5$ | $(\mathbb Z/2)^7\mathbb Z^{13}$ ; $\mathbb Z/2\,\mathbb Z$ ; $0$ ; $0$ | same | matches |
+| $\mathrm{PSL}_2(\mathbb F_7)$: $\mathcal{BC}_2,\mathcal{BC}_3,\mathcal{BC}_4$ | $(\mathbb Z/2)^3\mathbb Z$ ; $\mathbb Z/2$ ; $0$ | same | matches |
+| $A_6$: $\mathcal{BC}_2,\mathcal{BC}_3,\mathcal{BC}_4$ | $(\mathbb Z/2)^7\mathbb Z/4\,\mathbb Z$ ; $\mathbb Z/2\,\mathbb Z$ ; $0$ | same | matches (an independently constructed $\mathrm{PSL}_2(\mathbb F_9)\cong A_6$ gives the same) |
 
-Everything the paper states that I could find was reproduced exactly; no mismatches remain.
-The paper's own table also has BC₂(S₈) with a free summand `Z`, which is reproduced.
+Every value from the paper that we located was reproduced exactly; no discrepancies
+remain. The paper's own table also has $\mathcal{BC}_2(S_8)$ with a free summand $\mathbb
+Z$, which is reproduced.
 
-## Bug found and fixed during development (worth knowing)
+## A correctness note from development
 
-The definition-level cross-check disagreed on BC₁(C₂×S₃) (Z¹⁰ vs Z¹¹). Cause: my shortcut "B_n(H)=0 if
-#primary factors of H > n" is wrong for e.g. C₆ (= C₂×C₃, one generator suffices). It is now the largest p-rank.
-It did not change any published value tested at that point, but it would have affected groups with `V₄×C₃`-type
-abelian subgroups (e.g. S₇). Also, first draft treated (V) and (B) as exclusive when `b_i+b_j=0`; both hold
-(that fix produced S₃ and S₄ right).
+During development, the two independent implementations initially disagreed on
+$\mathcal{BC}_1(C_2\times S_3)$ ($\mathbb Z^{10}$ vs $\mathbb Z^{11}$). The cause was an
+incorrect shortcut in the Theorem-5.2-based implementation: "$\mathcal{B}_n(H)=0$ if the
+number of primary factors of $H$ exceeds $n$" — false for $H=\mathbb Z/6\cong\mathbb
+Z/2\times\mathbb Z/3$, which needs only one generator. The condition is now the correct
+one, the largest $p$-rank of $H$. This did not change any value in the table above, but
+would have affected groups containing an abelian subgroup like $V_4\times C_3$ (e.g.\
+$S_7$). Having a second, structurally independent implementation is what surfaced this.
 
-## Interpretation choices (please mention when presenting)
+## Interpretation choices
 
-* §3 literally says "(B): β=β₁+β₂ for all β" with zero entries allowed; applied to `b₁=b₂=0` that forces `β=2β`.
-  I therefore implement B_n(H) as in the **proof of Lemma 5.1**: zero-padded tuples, (B) only for distinct nonzero
-  entries, `(b,b,…)=(0,b,…)`, and (V). Blowing up with a zero entry only reproduces (V).
-* (V) is imposed for two entries `b_i=−b_j` at different positions, so a repeated 2-torsion character gives 0
-  (this is what kills every `H=C₂` contribution).
-* The action of `N_G(H)∩N_G(Y)` on characters uses `b↦b∘conj_g`; the opposite convention gives the same group.
+* Relation (B) as printed in §3 of the paper ("$\beta=\beta_1+\beta_2$ for all $\beta$"),
+  applied literally to two zero entries, forces $\beta=2\beta$, i.e.\ $\beta=0$ for every
+  tuple with a repeated zero. We follow the convention used in the proof of Lemma 5.1
+  instead: (B) applies only to distinct nonzero entries; a repeated nonzero entry gives
+  $(b,b,\dots)=(0,b,\dots)$; (V) handles $b+(-b)=0$.
+* (V) is imposed whenever two positions sum to zero, including a repeated character of
+  order 2 — this is what forces every summand with $H\cong\mathbb Z/2$ to vanish for
+  $n\ge2$.
+* The stabilizer $N_G(H)\cap N_G(Y)$ acts on characters via $b\mapsto b\circ\mathrm{conj}_g$;
+  the opposite sign convention yields an isomorphic quotient, so this choice does not
+  affect any result.
+
+## An independently-checkable certificate
+
+For a claimed value of a single $[H,Y]$-block, `certify_snf` in `BurnsideC.jl` builds the
+original (unreduced) integer relation matrix $A$ and returns unimodular $U,V$ with
+$UAV=D$ diagonal, via Nemo's `snf_with_transform`. Given only $A,U,V,D$, one can check
+$UAV=D$ and $\det U,\det V=\pm1$ by hand or in any other system, without trusting this
+code or the Smith-normal-form routine being certified. `verify_certificates.jl` checks
+this independently — using a from-scratch integer determinant and matrix product
+(fraction-free Gaussian elimination), not the library routine — for every $[H,Y]$-block of
+$\mathcal{BC}_2(S_3)$ and $\mathcal{BC}_2(S_4)$ (13 blocks total), and against six further
+synthetic presentations (including empty, rectangular, and non-unimodular-looking cases).
+
+## Enumerating abelian subgroups of large $S_n$
+
+`ConjugacyClassesSubgroups` (Step 1 above) is GAP's general-purpose subgroup-lattice
+algorithm; it takes about 51s for $S_9$ and does not finish within 10 minutes for
+$S_{10}$. An attempt to bypass this with a from-scratch combinatorial classification
+(partition $n$ into orbits, one abelian group acting regularly per orbit) turned out to be
+**mathematically incomplete**: in $S_4$, $\langle(1,2)(3,4)\rangle$ (order 2) and
+$\langle(1,2),(3,4)\rangle$ (order 4) have identical orbit data but are not conjugate — a
+subgroup need only *embed* in the product of its orbit images, as a possibly proper
+subdirect product (Goursat's lemma), which can happen even across orbits of
+non-isomorphic type whenever they share a nontrivial common quotient.
+
+`bc_structure_tom.g` instead reads the classes of abelian $H$ directly out of GAP's
+precomputed Table of Marks library (`tomlib`, already correct — no reclassification is
+needed), which has $S_4,\dots,S_{12}$ available. This reduces $H$-enumeration to under
+$0.1$s even for $S_{11}$, and was cross-checked against `ConjugacyClassesSubgroups`
+exactly (identical classes, identical $\mathcal{BC}_2$ values) for $S_4,\dots,S_8$.
+Somewhat surprisingly, the *total* time for $S_9$ barely improved (51–140s, machine
+dependent): the remaining cost is the per-$H$ work (in particular enumerating $Y$ with
+$H\subseteq Y\subseteq Z_G(H)$), not the $H$-enumeration this change targeted. For $S_{10}$
+and $S_{11}$, $H$-enumeration is fast but the full computation did not finish within a few
+minutes, so no $\mathcal{BC}_2$ value is available for either.
+
+## Results beyond the paper
+
+Not independently verified against any published source.
+
+* $\mathcal{BC}_2(S_9) = (\mathbb Z/2)^{529}\times(\mathbb Z/4)^{80}\times(\mathbb
+  Z/8)^{17}\times(\mathbb Z/16)^2\times(\mathbb Z/3)^{11}\times\mathbb Z^{11}$, obtained by
+  two independent subgroup-enumeration routes (above) with identical results.
+* For $\mathrm{AGL}(1,p)=\mathbb Z/p\rtimes\mathbb Z/(p-1)$ (not treated in the paper), no
+  pattern was found for $\mathcal{BC}_2$ or $\mathcal{BC}_3$, but writing $m=p-1$,
+  $$\operatorname{rank}\mathcal{BC}_1(\mathrm{AGL}(1,p)) = 1+\sum_{d\mid m,\,d>1}\varphi(d)\tau(m/d) = 1+\sigma(m)-\tau(m)$$
+  matches the computed rank exactly for the ten primes $p=5,\dots,37$ tested. The formula
+  follows from the fact that every nontrivial abelian subgroup of $\mathrm{AGL}(1,p)$ is
+  either the translation subgroup $C_p$ or is contained in a point stabilizer $C_m$.
 
 ## Not done / not verified
 
-* The geometric class `[X↷G]−[P²↷G]` (paper §6.5, via `Burn₂(G)→BC₂(G)` and the map Ψ) is **not** computed; I checked the
-  group `BC₂(C₂×S₃)` and its `[H,Y]`-decomposition, i.e. the target in which the class lives, not that class's image.
-  (The paper's notation `(C₃,C₂×C₃,(1,2))` there is ambiguous to me, since (1,2) sums to 0 on C₃.)
-* `BC_n(A₅)=0` for all n≥3: computed for n=3…9, and n ≥ ℓ+a−1 = 9 vanishes by the argument of Prop. 4.1 (which relies on the paper's relation (4.3), taken from [8]; we confirmed numerically that (4.3) adds nothing new in the tested cases).
-* Values not in the paper (e.g. BC₄(S₈)=(Z/2)²³, BC₅(S₈)=0, A₈, M₁₁, PSL(2,8), He₇) are outputs only; they passed only the
-  internal consistency tests, not a comparison to literature. BC₄(S₈) ≠ 0 with BC₅(S₈)=0 is consistent with Conjecture 4.2.
-* The definition-level check only covers |G| ≲ 720 and small n (it is much slower than Theorem 5.2).
+* The map $\mathrm{Burn}_2(G)\to\mathcal{BC}_2(G)$ and the specific class distinguishing
+  $X\!\downarrow\!G$ from $\mathbb P^2\!\downarrow\!G$ in §6.5 are not computed; only the
+  group $\mathcal{BC}_2(C_2\times S_3)$ that class lives in, and its full decomposition, are
+  verified.
+* The symbol $(C_3, C_2\times C_3, (1,2))$ in §6.5 does not have an unambiguous reading to
+  us: the characters $1$ and $2$ sum to zero on $C_3$, which relation (V) would send to
+  zero.
+* The restriction maps $\mathrm{res}^G_{G'}$ and the ring structure on
+  $\mathcal{BC}_*(G)$ (§4 of the paper) are not implemented.
+* The definition-level cross-check only covers $|G|\lesssim700$ and small $n$ — much
+  slower than the Theorem-5.2-based route.
 
-## How far can it go (Apple-silicon Mac, single thread; times exclude ~10 s Julia/OSCAR startup)
+## Performance
 
-| case | GAP class enumeration | linear algebra |
+Single-threaded, Apple-silicon Mac; excludes Julia/OSCAR startup (~10s).
+
+| case | subgroup enumeration | linear algebra |
 |---|---|---|
-| S₆ (70 classes) | 1.1 s | <0.1 s |
-| S₇ | 0.6 s | <0.1 s (n=2,3) |
-| S₈ (587 classes [H,Y]) | 5 s (15 s when the machine was loaded) | 0.5 s (n=2), 2.4 s (n=5) |
-| S₉ (964 classes) | 51 s | <1 s (n=2,3) |
-| S₁₀ | >10 min (aborted) | — |
-| (Z/2)⁵ (5395 classes) | 3 s | seconds for n≤5 |
-| He₇, n=3 (\|H^∨\|=49, 20,825 generators) | 0.2 s | 7 s |
-| He₁₁, n=3 (\|H^∨\|=121, ~3·10⁵ generators) | 0.3 s | did not finish in 8 min |
+| $S_6$ (70 classes) | 1.1s | <0.1s |
+| $S_7$ | 0.6s | <0.1s ($n=2,3$) |
+| $S_8$ (587 classes) | 5s | 0.5s ($n=2$), 2.4s ($n=5$) |
+| $S_9$ (964 classes): old method | 51s | <1s ($n=2,3$) |
+| $S_9$: `tomlib`-based $H$-enumeration only | 0.007s | — full pipeline still 51–140s, see above |
+| $S_{10}$, $S_{11}$: $H$-enumeration only | 0.02s, 0.04s | full pipeline did not finish in a few minutes |
+| $(\mathbb Z/2)^5$ (5395 classes) | 3s | seconds for $n\le5$ |
+| $\mathfrak{He}_7$, $n=3$ (20{,}825 generators) | 0.2s | 7s |
+| $\mathfrak{He}_{11}$, $n=3$ ($\sim3\times10^5$ generators) | 0.3s | did not finish in 8 min |
 
-So the bottleneck is (a) GAP's `ConjugacyClassesSubgroups` for large groups (S₁₀ and up would need an
-abelian-subgroups-only enumeration) and (b) the size of `B_n(H)`, which has C(|H|+n−1, n) generators;
-it becomes impractical roughly once that exceeds ~10⁵. n itself is rarely the limit (Conjecture 4.2 predicts vanishing beyond n ≈ log₂ of the largest abelian subgroup order).
+Two distinct bottlenecks: (a) for $S_9$ and up, the per-subgroup group-theoretic work
+(likely `IntermediateSubgroups`, not yet profiled to a single call); (b) the size of
+$\mathcal{B}_n(H)$, $\binom{|H|+n-1}{n}$ generators before relations, impractical past
+roughly $10^5$. $n$ itself is rarely the limit — Conjecture 4.2 of the paper predicts
+vanishing once $n$ exceeds roughly $\log_2$ of the largest abelian subgroup order.

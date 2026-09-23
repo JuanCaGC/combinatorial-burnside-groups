@@ -17,5 +17,17 @@ bc/survey.txt
 # study guides: kept local, not published
 bc/guia/
 
+# process logs / working notes addressed to the author, not to a reader of the
+# repo: kept local. Keep this pattern broad -- anything Spanish-language or
+# written as a personal report/explanation belongs here, not in git.
+bc/CODEX_LOG.md
+
+# agent-instruction files: never published (may contain repo-specific or
+# personal working notes, not meant for external readers)
+CLAUDE.md
+AGENTS.md
+**/CLAUDE.md
+**/AGENTS.md
+
 # scratch copies used for Codex task isolation
 /task-*/
