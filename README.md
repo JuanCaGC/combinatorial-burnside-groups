@@ -4,25 +4,29 @@ A Julia/OSCAR (GAP + Nemo) implementation of the combinatorial Burnside groups
 $\mathcal{BC}_n(G)$ of Tschinkel–Yang–Zhang, *Combinatorial Burnside groups*,
 [arXiv:2112.12801](https://arxiv.org/abs/2112.12801).
 
-Every value of $\mathcal{BC}_n(G)$ published in that paper that we could locate — 86
-checks, spanning its Sections 4 and 6.2–6.5 — is reproduced exactly, via two independent
-implementations (one following Theorem 5.2's decomposition, one built directly from the
-definition) that agree with each other and with the paper.
+Every value of $\mathcal{BC}_n(G)$ published in that paper that we could locate — 52
+direct comparisons, spanning its Sections 4 and 6.2–6.5 — is reproduced exactly. A second
+implementation, built directly from the definition rather than Theorem 5.2's
+decomposition, agrees with the first on 31 further cross-check cases (both ultimately
+reduce to the same cokernel/Smith-normal-form routine, so the two are independent in how
+the relations are constructed, not in the final linear algebra).
 
 ## Status
 
-- **86/86** checks against published values pass (`bc/validate.jl all`).
-- Cross-checked by an independent, definition-level implementation for 31 `(group, n)`
-  pairs (no shared code path with the main implementation).
+- **88/88** checks pass (`bc/validate.jl all`): 52 direct comparisons against the paper's
+  published values, plus 36 internal consistency checks (31 cross-implementation
+  comparisons, 5 redundancy checks) that do not involve the paper.
 - An independently-checkable certificate for the linear-algebra step (Smith normal form)
-  is available: given only the certificate's matrices, anyone can verify a claimed result
-  by hand, without trusting this code or the Nemo/FLINT library it calls.
+  is available: given only the certificate's matrices, anyone can verify that a specific
+  relation matrix's cokernel was computed correctly, by hand, without trusting this code
+  or the Nemo/FLINT library it calls.
 - A few results beyond the paper (not independently verified against any published
   source): a value of $\mathcal{BC}_2(\mathrm{Sym}_9)$, and a proved rank formula for
   $\mathcal{BC}_1(\mathrm{AGL}(1,p))$.
 
-See [`bc/REPORT.md`](bc/REPORT.md) for the full validation report and
-[`bc/validation_output.txt`](bc/validation_output.txt) for the raw transcript.
+See [`bc/REPORT.md`](bc/REPORT.md) for the full validation report (including exactly what
+the 52/36 split covers) and [`bc/validation_output.txt`](bc/validation_output.txt) for the
+raw transcript.
 
 ## Requirements
 
@@ -37,6 +41,7 @@ julia --project=. validate.jl            # every published value, up to Sym_6 (~
 julia --project=. validate.jl full       # + Sym_7, Sym_8
 julia --project=. validate.jl crosscheck # Theorem 5.2 implementation vs. the direct definition
 julia --project=. validate.jl demo       # per-class breakdown of BC_2(C2 x Sym_3), the paper's geometric example
+julia --project=. validate.jl all        # everything above, in one run (88 checks)
 ```
 
 ```julia
@@ -79,18 +84,14 @@ bc(st, 2)                            # BC_2(A6) = ...
 
 Some implementation work in this repository (the Smith-normal-form certificate and the
 Table-of-Marks-based enumerator) was carried out with the assistance of AI coding agents
-(Claude Code, OpenAI Codex), under review and independent re-verification at each step —
-every value reported in `bc/REPORT.md` was re-checked directly, not taken on the agents'
-word. An earlier attempt at a direct combinatorial classification of abelian subgroups of
-$\mathrm{Sym}_n$ turned out to be mathematically incomplete (see `bc/REPORT.md`, "Enumerating
-abelian subgroups of large $S_n$") and was abandoned in favor of the Table-of-Marks route.
+(Claude Code, OpenAI Codex). Each value reported in `bc/REPORT.md` was independently
+re-verified by re-running the relevant script directly, rather than relying on the
+agents' own reports of success. An earlier attempt at a direct combinatorial
+classification of abelian subgroups of $\mathrm{Sym}_n$ turned out to be mathematically
+incomplete (see `bc/REPORT.md`, "Enumerating abelian subgroups of large $S_n$") and was
+abandoned in favor of the Table-of-Marks route.
 
 ## License
 
-No license is currently specified; all rights reserved by default. Add one (e.g. MIT or
-BSD-3-Clause) if you want others to be able to reuse this code.
-
-## Reference
-
-Yuri Tschinkel, Kaiqi Yang, Zhijia Zhang. *Combinatorial Burnside groups*.
-[arXiv:2112.12801](https://arxiv.org/abs/2112.12801).
+No license is currently specified (all rights reserved by default). A license such as
+MIT or BSD-3-Clause would need to be added to permit reuse.
