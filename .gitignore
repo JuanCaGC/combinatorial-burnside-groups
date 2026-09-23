@@ -16,3 +16,6 @@ bc/survey.txt
 
 # study guides: kept local, not published
 bc/guia/
+
+# scratch copies used for Codex task isolation
+/task-*/
