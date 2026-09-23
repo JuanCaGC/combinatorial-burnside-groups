@@ -1,7 +1,18 @@
-# papers descargados durante la investigación (no son nuestro contenido)
-paper.pdf
-paper.txt
-paper_yang_site.pdf
-paper_yang_site.txt
-survey.pdf
-survey.txt
+# macOS
+.DS_Store
+bc/.DS_Store
+
+# papers downloaded during research (not our content)
+bc/paper.pdf
+bc/paper.txt
+bc/paper_yang_site.pdf
+bc/paper_yang_site.txt
+bc/survey.pdf
+bc/survey.txt
+
+# LaTeX write-ups and PDFs: kept local, not published
+*.tex
+*.pdf
+
+# study guides: kept local, not published
+bc/guia/
