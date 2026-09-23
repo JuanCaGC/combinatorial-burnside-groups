@@ -1,0 +1,38 @@
+He7    |G|=343  GAP enumeration: 0.2s, 34 classes [H,Y]
+   n=2  0.5s   BC_2 = (Z/2)^50 × Z^342
+   n=3  7.4s   BC_3 = (Z/2)^178 × (Z/4)^32 × Z^120
+--- exit for He7 done
+PSL28  |G|=504  GAP enumeration: 0.4s, 12 classes [H,Y]
+   n=2  0.6s   BC_2 = (Z/2)^11 × Z/4 × Z/3 × Z
+   n=3  0.0s   BC_3 = (Z/2)^3 × Z
+   n=4  0.0s   BC_4 = 0
+--- exit for PSL28 done
+PSL29  |G|=360  GAP enumeration: 0.5s, 14 classes [H,Y]
+   n=2  0.6s   BC_2 = (Z/2)^7 × Z/4 × Z
+   n=3  0.0s   BC_3 = Z/2 × Z
+   n=4  0.0s   BC_4 = 0
+--- exit for PSL29 done
+M11    |G|=7920  GAP enumeration: 1.1s, 23 classes [H,Y]
+   n=2  0.7s   BC_2 = (Z/2)^9 × Z/4 × Z/8 × Z^3
+   n=3  0.0s   BC_3 = (Z/2)^2 × Z
+   n=4  0.0s   BC_4 = 0
+--- exit for M11 done
+D31    |G|=62  GAP enumeration: 0.1s, 2 classes [H,Y]
+   n=2  0.5s   BC_2 = (Z/2)^14 × Z/16 × Z/5 × Z^26
+--- exit for D31 done
+C2^5   |G|=32  GAP enumeration: 3.2s, 5395 classes [H,Y]
+   n=2  0.5s   BC_2 = (Z/2)^4960
+   n=3  0.0s   BC_3 = (Z/2)^6200
+   n=4  0.3s   BC_4 = (Z/2)^3968
+--- exit for C2^5 done
+--- exit for S10 done
+
+# --- additional probes run separately ---
+D101   |G|=202  GAP enumeration: 0.1s, 2 classes [H,Y]
+   n=2  0.7s   BC_2 = (Z/2)^50 × Z/25 × Z/17 × Z^376
+He11   |G|=1331  GAP enumeration: 0.3s, 50 classes [H,Y]
+   n=2  0.7s   BC_2 = (Z/5)^98 × Z^1488
+   n=3  did not finish within ~8 min (|H^|=121 -> ~3e5 generators of B_3((Z/11)^2))
+S10    GAP enumeration of subgroup classes did not finish within 10 min (aborted)
+# earlier (interactive) probes: S8 n=2..5 -> 0.5s,0.1s,0.3s,2.4s (GAP 5.5s); S9 GAP 51s, n=2,3 <1s;
+# A8 GAP 1.7s; C2^4, C2^5 (5395 classes) all n<=5 in seconds; He7 n=3 7.4s.
