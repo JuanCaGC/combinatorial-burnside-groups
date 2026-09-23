@@ -205,3 +205,57 @@ IntermediateSubgroups, Orbits) exactamente igual, con la misma disciplina de ver
 cruzada contra el método viejo para `S_4..S_8` antes de confiar en `S_9,S_10,S_11`.
 
 Despachado como tarea B2, carpeta `/Users/juancagc/Groups/task-sn-tomlib`.
+
+---
+
+### 2026-09-23 — Tarea B2 (`BCStructureTom` vía TomLib): ✅ fusionada, con un hallazgo que corrige mi propio diagnóstico
+
+**Evaluar.** Codex implementó `BCStructureTom(n)` en `bc_structure_tom.g`: usa
+`TableOfMarks`/`RepresentativeTom` de TomLib solo para la enumeración de `H`, y copia
+**byte a byte** la lógica posterior (Centralizer, Normalizer, IntermediateSubgroups, Orbits,
+matrices) de `bc_structure.g`. Verificación propia de Codex, con evidencia pegada, no solo
+afirmada:
+
+1. Para `S₄`–`S₈`: comparó las clases `H` del método viejo y el nuevo con una **biyección
+   exacta de conjugación** (no solo conteo), para las cinco. Coincidencia total.
+2. Alimentó ambas estructuras a `bc(st,2)` sin tocarlo: valores idénticos a los ya publicados
+   para `S₄`–`S₈`.
+3. `validate.jl all` (código viejo, sin modificar) siguió en `passed: 86 failed: 0`.
+4. `S₉`: enumeración de `H` en 0.0068s; **pero la construcción completa de la estructura
+   tardó 51.67s** — casi lo mismo que el método viejo completo.
+5. `S₁₀`, `S₁₁`: enumeración de `H` en 0.02s/0.04s; la estructura completa no terminó en
+   ~4–4.5 minutos (interrumpida, sin forzar). Sin valores de `BC_2` para estos dos.
+6. Huellas SHA-256 de `bc_structure.g`, `BurnsideC.jl`, `validate.jl` antes y después:
+   idénticas — confirma que no se tocó nada existente.
+
+**Investigar / ejecutar (verificación propia, no me quedé con el reporte).** Copié
+`bc_structure_tom.g` y `tomlib.jl` al proyecto real y repetí todo:
+
+- `validate.jl all` (código viejo): `passed: 86 failed: 0` de nuevo.
+- `S₄`–`S₈` vía la nueva vía: los cinco coinciden exactamente con los valores publicados.
+- `S₉` completo: en mi máquina tardó **141.49s** (no 51.67s como en el sandbox de Codex —
+  diferencia de entorno/carga, no la investigué más). Pero el valor de `BC₂(S₉)` que obtuve
+  — `(ℤ/2)⁵²⁹×(ℤ/4)⁸⁰×(ℤ/8)¹⁷×(ℤ/16)²×(ℤ/3)¹¹×ℤ¹¹` — coincide **exactamente** con el de
+  Codex, y además con un cálculo que yo misma había hecho mucho antes en esta sesión con el
+  método viejo (`scaling_log.txt`, `guia/03` §7). Triple confirmación cruzada del mismo valor,
+  por dos algoritmos de enumeración distintos.
+
+**El hallazgo importante, que corrige `guia/04_el_codigo.md` §8 tal como estaba escrito
+antes de hoy:** yo había atribuido todo el cuello de botella de `S₉`+ a
+`ConjugacyClassesSubgroups`. Es **incompleto**. Esa llamada sí es cara, pero incluso
+eliminándola por completo (enumeración de `H` casi gratis), el tiempo total para `S₉` casi no
+bajó. El verdadero costo dominante para `S₉`+ está en el trabajo *por cada `H`* — casi
+seguro `IntermediateSubgroups(Z_G(H), H)`, que es en sí misma una enumeración de subgrupos
+(de un grupo más chico, `Z_G(H)`, pero no necesariamente chico). No lo perfilé con precisión
+para confirmar cuál llamada exacta domina.
+
+**Decisión.** Se fusiona — es una ganancia real y verificada: enumeración de `H` instantánea
+incluso en `S₁₁`, y de paso el pipeline completo también salió más rápido para `S₄`–`S₈`
+(bono, no buscado). No resuelve `S₉`+ por sí sola. Commit:
+`Add BCStructureTom: enumerate abelian subgroups of S_n via GAP's TomLib`. Publicado en
+GitHub. Documentado en `guia/04_el_codigo.md` §8 y §8bis (con la corrección del diagnóstico).
+
+**Siguiente decisión, otra vez para el usuario:** ¿perfilar `IntermediateSubgroups` (o lo que
+sea que domine) para intentar destrabar `S₉`+ de verdad, o dejarlo aquí? Es un problema
+distinto del que se resolvió hoy, con un análisis propio todavía por hacer antes de poder
+estimar cuánto costaría arreglarlo.
