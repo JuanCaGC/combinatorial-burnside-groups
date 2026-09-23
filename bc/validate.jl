@@ -115,7 +115,7 @@ function quick()
                    r, [(3,3,"Z/2"), (4,4,"(Z/2)^2"), (3,6,"Z/2"), (6,6,"Z/2 × Z/4")])
 
     header("Dihedral groups D_p (order 2p)  — paper's formula is an experimental observation")
-    for p in (5, 7, 11, 13, 17, 19, 23)
+    for p in (5, 7, 11, 13, 17, 19, 23, 31, 101)
         rk = (p - 5) * (p - 7) ÷ 24
         pred = join(filter(!isempty, [rk > 0 ? "Z^$rk" : "", "(Z/2)^$((p-3)÷2)", "Z/$((p^2-1)÷12)"]), " × ")
         stp = getstruct("D$p", () -> group_D(p))

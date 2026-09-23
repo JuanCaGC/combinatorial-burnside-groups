@@ -2,8 +2,8 @@
 ====================================================================================================
 Symmetric groups S_n   (paper Section 6.3 table)
 ====================================================================================================
-  (GAP: 2 classes [H,Y] of |G|=6 enumerated in 0.06s)
-  [ OK ] BC_2(S_3)        computed: Z/2                                            paper: Z/2                                          0.54s  (2 classes [H,Y])
+  (GAP: 2 classes [H,Y] of |G|=6 enumerated in 0.10s)
+  [ OK ] BC_2(S_3)        computed: Z/2                                            paper: Z/2                                          0.52s  (2 classes [H,Y])
   [ OK ] BC_3(S_3)        computed: 0                                              paper: 0                                            0.00s  (2 classes [H,Y])
   (GAP: 1 classes [H,Y] of |G|=3 enumerated in 0.00s)
   [ OK ] BC_2(C_3)        computed: Z                                              paper: Z                                            0.00s  (1 classes [H,Y])  # paper Sec. 4: BC_2(C_3) = Z
@@ -15,8 +15,8 @@ Symmetric groups S_n   (paper Section 6.3 table)
   (GAP: 16 classes [H,Y] of |G|=120 enumerated in 0.15s)
   [ OK ] BC_2(S_5)        computed: (Z/2)^6 × Z/4                                  paper: (Z/2)^6 × Z/4                                0.00s  (16 classes [H,Y])
   [ OK ] BC_3(S_5)        computed: 0                                              paper: 0                                            0.00s  (16 classes [H,Y])
-  (GAP: 70 classes [H,Y] of |G|=720 enumerated in 0.55s)
-  [ OK ] BC_2(S_6)        computed: (Z/2)^31 × (Z/4)^3 × Z/8                       paper: (Z/2)^31 × (Z/4)^3 × Z/8                     0.01s  (70 classes [H,Y])
+  (GAP: 70 classes [H,Y] of |G|=720 enumerated in 0.54s)
+  [ OK ] BC_2(S_6)        computed: (Z/2)^31 × (Z/4)^3 × Z/8                       paper: (Z/2)^31 × (Z/4)^3 × Z/8                     0.00s  (70 classes [H,Y])
   [ OK ] BC_3(S_6)        computed: (Z/2)^5 × Z/4                                  paper: (Z/2)^5 × Z/4                                0.00s  (70 classes [H,Y])
 
 ====================================================================================================
@@ -50,9 +50,9 @@ Dihedral groups D_p (order 2p)  — paper's formula is an experimental observati
   [ OK ] BC_2(D_5)        computed: (Z/2)^2                                        paper: (Z/2)^2                                      0.00s  (2 classes [H,Y])  # formula: Z^((p-5)(p-7)/24) × (Z/2)^((p-3)/2) × Z/((p²-1)/12)
   (GAP: 2 classes [H,Y] of |G|=14 enumerated in 0.00s)
   [ OK ] BC_2(D_7)        computed: (Z/2)^2 × Z/4                                  paper: (Z/2)^2 × Z/4                                0.00s  (2 classes [H,Y])  # formula: Z^((p-5)(p-7)/24) × (Z/2)^((p-3)/2) × Z/((p²-1)/12)
-  (GAP: 2 classes [H,Y] of |G|=22 enumerated in 0.00s)
+  (GAP: 2 classes [H,Y] of |G|=22 enumerated in 0.01s)
   [ OK ] BC_2(D_11)       computed: (Z/2)^5 × Z/5 × Z                              paper: (Z/2)^5 × Z/5 × Z                            0.00s  (2 classes [H,Y])  # formula: Z^((p-5)(p-7)/24) × (Z/2)^((p-3)/2) × Z/((p²-1)/12)
-  (GAP: 2 classes [H,Y] of |G|=26 enumerated in 0.00s)
+  (GAP: 2 classes [H,Y] of |G|=26 enumerated in 0.01s)
   [ OK ] BC_2(D_13)       computed: (Z/2)^6 × Z/7 × Z^2                            paper: (Z/2)^6 × Z/7 × Z^2                          0.00s  (2 classes [H,Y])  # formula: Z^((p-5)(p-7)/24) × (Z/2)^((p-3)/2) × Z/((p²-1)/12)
   (GAP: 2 classes [H,Y] of |G|=34 enumerated in 0.01s)
   [ OK ] BC_2(D_17)       computed: (Z/2)^7 × Z/8 × Z/3 × Z^5                      paper: (Z/2)^7 × Z/8 × Z/3 × Z^5                    0.00s  (2 classes [H,Y])  # formula: Z^((p-5)(p-7)/24) × (Z/2)^((p-3)/2) × Z/((p²-1)/12)
@@ -60,6 +60,10 @@ Dihedral groups D_p (order 2p)  — paper's formula is an experimental observati
   [ OK ] BC_2(D_19)       computed: (Z/2)^9 × Z/3 × Z/5 × Z^7                      paper: (Z/2)^9 × Z/3 × Z/5 × Z^7                    0.00s  (2 classes [H,Y])  # formula: Z^((p-5)(p-7)/24) × (Z/2)^((p-3)/2) × Z/((p²-1)/12)
   (GAP: 2 classes [H,Y] of |G|=46 enumerated in 0.01s)
   [ OK ] BC_2(D_23)       computed: (Z/2)^10 × Z/4 × Z/11 × Z^12                   paper: (Z/2)^10 × Z/4 × Z/11 × Z^12                 0.00s  (2 classes [H,Y])  # formula: Z^((p-5)(p-7)/24) × (Z/2)^((p-3)/2) × Z/((p²-1)/12)
+  (GAP: 2 classes [H,Y] of |G|=62 enumerated in 0.01s)
+  [ OK ] BC_2(D_31)       computed: (Z/2)^14 × Z/16 × Z/5 × Z^26                   paper: (Z/2)^14 × Z/16 × Z/5 × Z^26                 0.00s  (2 classes [H,Y])  # formula: Z^((p-5)(p-7)/24) × (Z/2)^((p-3)/2) × Z/((p²-1)/12)
+  (GAP: 2 classes [H,Y] of |G|=202 enumerated in 0.08s)
+  [ OK ] BC_2(D_101)      computed: (Z/2)^50 × Z/25 × Z/17 × Z^376                 paper: (Z/2)^50 × Z/25 × Z/17 × Z^376               0.03s  (2 classes [H,Y])  # formula: Z^((p-5)(p-7)/24) × (Z/2)^((p-3)/2) × Z/((p²-1)/12)
 
 ====================================================================================================
 Central extensions of abelian groups (Section 6.2)
@@ -72,22 +76,22 @@ Central extensions of abelian groups (Section 6.2)
   [ OK ] He_3: #[Z/p,Z/p] = 3p+5 and #[(Z/p)^2,(Z/p)^2] = p+1  (p=3)   computed: [3 => 14, 9 => 4]
   (GAP: 26 classes [H,Y] of |G|=125 enumerated in 0.04s)
   [ OK ] BC_2(He_5)       computed: Z^124                                          paper: Z^124                                        0.00s  (26 classes [H,Y])
-  [ OK ] BC_3(He_5)       computed: (Z/2)^36 × Z^36                                paper: (Z/2)^36 × Z^36                              0.08s  (26 classes [H,Y])
+  [ OK ] BC_3(He_5)       computed: (Z/2)^36 × Z^36                                paper: (Z/2)^36 × Z^36                              0.10s  (26 classes [H,Y])
   [ OK ] He_5: #[Z/p,Z/p] = 3p+5 and #[(Z/p)^2,(Z/p)^2] = p+1  (p=5)   computed: [5 => 20, 25 => 6]
 
 ====================================================================================================
 Primitive subgroups of the plane Cremona group (Section 6.4)
 ====================================================================================================
-  (GAP: 21 classes [H,Y] of |G|=216 enumerated in 0.05s)
+  (GAP: 21 classes [H,Y] of |G|=216 enumerated in 0.06s)
   [ OK ] BC_2(ASL(2,3))   computed: (Z/2)^7 × Z^13                                 paper: (Z/2)^7 × Z^13                               0.00s  (21 classes [H,Y])
   [ OK ] BC_3(ASL(2,3))   computed: Z/2 × Z                                        paper: Z/2 × Z                                      0.00s  (21 classes [H,Y])
   [ OK ] BC_4(ASL(2,3))   computed: 0                                              paper: 0                                            0.01s  (21 classes [H,Y])
-  [ OK ] BC_5(ASL(2,3))   computed: 0                                              paper: 0                                            0.05s  (21 classes [H,Y])
+  [ OK ] BC_5(ASL(2,3))   computed: 0                                              paper: 0                                            0.07s  (21 classes [H,Y])
   (GAP: 10 classes [H,Y] of |G|=168 enumerated in 0.05s)
   [ OK ] BC_2(PSL(2,7))   computed: (Z/2)^3 × Z                                    paper: (Z/2)^3 × Z                                  0.00s  (10 classes [H,Y])
   [ OK ] BC_3(PSL(2,7))   computed: Z/2                                            paper: Z/2                                          0.00s  (10 classes [H,Y])
   [ OK ] BC_4(PSL(2,7))   computed: 0                                              paper: 0                                            0.00s  (10 classes [H,Y])
-  (GAP: 14 classes [H,Y] of |G|=360 enumerated in 0.07s)
+  (GAP: 14 classes [H,Y] of |G|=360 enumerated in 0.08s)
   [ OK ] BC_2(A_6)        computed: (Z/2)^7 × Z/4 × Z                              paper: (Z/2)^7 × Z/4 × Z                            0.00s  (14 classes [H,Y])
   [ OK ] BC_3(A_6)        computed: Z/2 × Z                                        paper: Z/2 × Z                                      0.00s  (14 classes [H,Y])
   [ OK ] BC_4(A_6)        computed: 0                                              paper: 0                                            0.00s  (14 classes [H,Y])
@@ -121,11 +125,11 @@ Cross-check: Theorem 5.2 implementation  vs  definition-level (C),(V),(B2) with 
   [ OK ] BC_2(D4×C3 ) Thm5.2: (Z/2)^23 × Z/4 × Z^33        definition-level: (Z/2)^23 × Z/4 × Z^33        (395 generators, 740 relations, 0.0s)
   [ OK ] BC_3(D4×C3 ) Thm5.2: (Z/2)^14                     definition-level: (Z/2)^14                     (1503 generators, 5598 relations, 0.0s)
   [ OK ] BC_1(C6×C6 ) Thm5.2: Z^212                        definition-level: Z^212                        (212 generators, 0 relations, 0.0s)
-  [ OK ] BC_2(C6×C6 ) Thm5.2: (Z/2)^93 × (Z/4)^8 × (Z/3)^7 × Z^310 definition-level: (Z/2)^93 × (Z/4)^8 × (Z/3)^7 × Z^310 (1802 generators, 1714 relations, 1.0s)
+  [ OK ] BC_2(C6×C6 ) Thm5.2: (Z/2)^93 × (Z/4)^8 × (Z/3)^7 × Z^310 definition-level: (Z/2)^93 × (Z/4)^8 × (Z/3)^7 × Z^310 (1802 generators, 1714 relations, 0.7s)
   [ OK ] BC_1(S3×S3 ) Thm5.2: Z^22                         definition-level: Z^22                         (98 generators, 242 relations, 0.0s)
   [ OK ] BC_2(S3×S3 ) Thm5.2: (Z/2)^14 × (Z/4)^3 × Z       definition-level: (Z/2)^14 × (Z/4)^3 × Z       (317 generators, 1069 relations, 0.0s)
   [ OK ] BC_3(S3×S3 ) Thm5.2: Z/2 × Z                      definition-level: Z/2 × Z                      (782 generators, 3844 relations, 0.0s)
-  [ OK ] BC_2(S_6   ) Thm5.2: (Z/2)^31 × (Z/4)^3 × Z/8     definition-level: (Z/2)^31 × (Z/4)^3 × Z/8     (9939 generators, 27956 relations, 0.4s)
+  [ OK ] BC_2(S_6   ) Thm5.2: (Z/2)^31 × (Z/4)^3 × Z/8     definition-level: (Z/2)^31 × (Z/4)^3 × Z/8     (9939 generators, 27956 relations, 0.3s)
 
 ====================================================================================================
 Sanity: imposing the (redundant) vanishing  sum_{i in I} b_i = 0  changes nothing  (paper (4.3))
@@ -139,14 +143,14 @@ Sanity: imposing the (redundant) vanishing  sum_{i in I} b_i = 0  changes nothin
 ====================================================================================================
 S_7, S_8  (stretch; GAP subgroup-class enumeration dominates)
 ====================================================================================================
-  (GAP: 119 classes [H,Y] of |G|=5040 enumerated in 0.59s)
+  (GAP: 119 classes [H,Y] of |G|=5040 enumerated in 0.57s)
   [ OK ] BC_2(S_7)        computed: (Z/2)^57 × (Z/4)^12 × (Z/8)^2 × Z/3            paper: (Z/2)^57 × (Z/4)^12 × (Z/8)^2 × Z/3          0.00s  (119 classes [H,Y])
   [ OK ] BC_3(S_7)        computed: (Z/2)^16 × Z/4                                 paper: (Z/2)^16 × Z/4                               0.01s  (119 classes [H,Y])
-  (GAP: 587 classes [H,Y] of |G|=40320 enumerated in 5.41s)
+  (GAP: 587 classes [H,Y] of |G|=40320 enumerated in 4.91s)
   [ OK ] BC_2(S_8)        computed: (Z/2)^290 × (Z/4)^30 × (Z/8)^6 × Z/16 × (Z/3)^2 × Z paper: (Z/2)^290 × (Z/4)^30 × (Z/8)^6 × Z/16 × (Z/3)^2 × Z   0.00s  (587 classes [H,Y])
-  [ OK ] BC_3(S_8)        computed: (Z/2)^122 × (Z/4)^4 × Z/8 × Z                  paper: (Z/2)^122 × (Z/4)^4 × Z/8 × Z                0.03s  (587 classes [H,Y])
+  [ OK ] BC_3(S_8)        computed: (Z/2)^122 × (Z/4)^4 × Z/8 × Z                  paper: (Z/2)^122 × (Z/4)^4 × Z/8 × Z                0.07s  (587 classes [H,Y])
 
 ====================================================================================================
 SUMMARY
 ====================================================================================================
-  passed: 86   failed: 0
+  passed: 88   failed: 0
