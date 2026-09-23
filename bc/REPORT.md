@@ -244,8 +244,42 @@ $S=\begin{pmatrix}0&1\\1&0\end{pmatrix}$, computed using the same $M^{-T}$ conve
 existing code already requires), and the reported action matrices for $T$ and $S$ were checked
 by hand to satisfy the correct $S_3$ relations ($T^2=S^2=I$, $(TS)^3=I$). For $p=3$, rank
 $7$, the analogous matrices were computed and checked (Smith-normal-form certificate,
-group-relation products) but the module was not identified with a named representation; this
-negative result is reported as such, not forced.
+group-relation products); at the time this was reported as "not identified with a named
+representation." A follow-up pass here (`gl_classify_p3.jl`) closed this: feeding only the
+three reported $7\times7$ matrices and the abstract generators $T,D,S$ into a fresh
+computation, the full order-$48$ group $\mathrm{GL}_2(\mathbb F_3)$ was rebuilt by closure
+under the generators, tracking the corresponding matrix product at every one of the 48
+elements — with **zero contradictions**, which is itself strong independent confirmation
+that the reported matrices form a genuine representation (consistent with, but stronger
+than, the "$144/144$" composition checks already reported). Comparing the resulting
+character against the ordinary character table of $\mathrm{GL}_2(\mathbb F_3)$ (computed
+directly, not looked up) shows the $7$-dimensional module splits as exactly **two
+irreducible constituents, each with multiplicity one**: a degree-$3$ and a degree-$4$
+irreducible. The observed full degree spectrum of $\mathrm{GL}_2(\mathbb F_3)$ — $1,1,2,2,2,3,3,4$
+— matches the standard classification of $\mathrm{GL}_2(\mathbb F_q)$'s ordinary irreducibles
+exactly ($q-1$ linear, $q-1$ twisted-Steinberg of dimension $q$, one principal series of
+dimension $q+1$, and $(q-1)(q-2)/2$ cuspidal pairs collapsing to $(q^2-1)/2-(q-1)$ terms of
+dimension $q-1$; for $q=3$: $2,2,1,3$ representations of degrees $1,3,4,2$ respectively). The
+degree-$4$ constituent acts on the center $\{\pm I\}$ by the scalar $-1$, matching the unique
+mixed-character principal series $\mathrm{Ind}_B^G(\mathbf 1,\chi)$ for $\chi$ the nontrivial
+character of $\mathbb F_3^\times$; the degree-$3$ constituent acts trivially on the center,
+consistent with an (untwisted-on-the-center) Steinberg-type constituent — the two candidate
+degree-$3$ irreducibles differ only on the order-$8$ and non-central order-$2$ classes, and
+the module picks out one of them specifically (full character values in
+`gl_classify_p3_output.txt`). This is a genuine, checkable identification, not a dimension
+coincidence: it uses the actual character values of the actual representation, not just its
+dimension.
+
+**A composition-order correction found during this follow-up.** The original report states
+in prose that "row matrices compose in application order ($h$ after $g$ gives $R_gR_h$)."
+Rebuilding the group both ways shows this is backwards for the matrices as given: composing
+as $R_g R_h$ produces $40$ contradictions among the $48$ group elements, while composing as
+$R_hR_g$ (i.e. $g\mapsto R_g$ is an anti-homomorphism for the generators' own group law)
+produces zero. This does not affect the classification above or the correctness of the
+matrices themselves — every character value obtained is a rational integer, hence real, and
+for a real character $\chi(g)=\chi(g^{-1})$ always, so the anti-homomorphism's character
+equals that of the corresponding genuine representation. It is a correction to one sentence
+of prose, not to the computation.
 
 **A correction to the exploration's own working assumptions, found and fixed during the
 computation.** The originally proposed generators $T$ (a transvection) and a diagonal matrix
@@ -263,11 +297,13 @@ concern raised in the planning notes (`gl_module_notes.md` §5) that module-reco
 machinery might not be available in this environment: it is available, under GAP's own name
 for it rather than the package name assumed going in.
 
-**Scope.** This is Priority 1/1b/3 data plus one fully worked, independently-checked example
-($p=2$), not a general answer to Problem 6.1. Not attempted: $r=3$ actions, $m<r$ induced
-pieces, ring multiplication, or classifying the $p=3$ rank-7 module. See `gl_module_notes.md`
-for the parabolic-induction argument and `gl_module_codex_report.md` for the full computational
-log (raw tables, GAP/Python output, Smith-normal-form certificates).
+**Scope.** This is Priority 1/1b/3 data plus two fully worked, independently-checked examples
+($p=2$ and, after the follow-up above, $p=3$), not a general answer to Problem 6.1. Not
+attempted: $r=3$ actions, $m<r$ induced pieces, or ring multiplication. See `gl_module_notes.md`
+for the parabolic-induction argument, `gl_module_codex_report.md` for the original
+computational log, and `gl_classify_p3.jl`/`gl_classify_p3_output.txt` for the $p=3$
+classification (raw tables, GAP/Python output, Smith-normal-form certificates, character
+values).
 
 ## Not done / not verified
 
@@ -283,8 +319,11 @@ log (raw tables, GAP/Python output, Smith-normal-form certificates).
 * The restriction maps $\mathrm{res}^G_{G'}$ and the ring structure on
   $\mathcal{BC}_*(G)$ (§4 of the paper) are not implemented.
 * The $\mathrm{GL}_r(\mathbb F_p)$-module structure of $\mathcal{BC}_n(\mathbb F_p^r)$
-  (Problem 6.1) is worked out for one case only ($p=2,r=2,n=2$); $r=3$ actions, induced
-  pieces with $m<r$, and the $p=3$ rank-7 module's identity are open.
+  (Problem 6.1) is worked out for two cases only ($p=2,3$, both $r=2,n=2$); $r=3$ actions,
+  induced pieces with $m<r$, and the ring structure are open. The classification found for
+  these two cases (contragredient natural module at $p=2$; a Steinberg-type $\oplus$
+  principal-series decomposition at $p=3$) is not yet connected to any general statement
+  about the induced-module structure argued for in `gl_module_notes.md`.
 * The definition-level cross-check only covers $|G|\lesssim700$ and small $n$ — much
   slower than the Theorem-5.2-based route.
 

@@ -1,0 +1,25 @@
+closure_size = 48
+class_sizes = Any[1, 8, 1, 8, 6, 6, 6, 12]
+size_G3 = 48
+inconsistencies = 0
+multiplicities = Any[0, 0, 0, 0, 0, 1, 0, 1]
+chi_inner_chi = 2
+class_match = Any[1, 2, 3, 4, 5, 6, 7, 8]
+det_RD = 1
+chi_ccl_order = Any[7, -1, -1, 1, -1, 1, 1, -1]
+sum_check = 7
+irr_degrees = Any[1, 1, 2, 2, 2, 3, 3, 4]
+det_RT = 1
+num_classes = 8
+chi_tbl_order = Any[7, -1, -1, 1, -1, 1, 1, -1]
+det_RS = 1
+elt_orders = Any[1, 6, 2, 3, 4, 8, 8, 2]
+
+--- extra identification data ---
+orders = Any[1, 6, 2, 3, 4, 8, 8, 2]
+degs = Any[1, 1, 2, 2, 2, 3, 3, 4]
+irr8 = Any[4, -1, -4, 1, 0, 0, 0, 0]
+sizes = Any[1, 8, 1, 8, 6, 6, 6, 12]
+irr6 = Any[3, 0, 3, 0, -1, 1, 1, -1]
+center_size = 2
+irr7 = Any[3, 0, 3, 0, -1, -1, -1, 1]
