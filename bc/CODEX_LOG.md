@@ -174,3 +174,34 @@ queda en `task-sn-enum/`, sin fusionar (no aporta capacidad nueva, solo evidenci
    (ya documentada en `guia/04_el_codigo.md` §8), sin más inversión por ahora.
 
 Preguntado al usuario en el chat el 2026-09-23.
+
+**Respuesta del usuario**: hacer las dos cosas — primero verificar TomLib, y si hace falta,
+recién ahí rediseñar.
+
+---
+
+### 2026-09-23 — Investigación propia: TomLib resuelve el problema sin necesidad de Goursat
+
+**Investigar** (hecho por mí directamente, sin delegar — era una comprobación rápida).
+`TestPackageAvailability("tomlib")` y `LoadPackage("tomlib")` → ambos `true`: el paquete ya
+está instalado con OSCAR. `TableOfMarks("Sn")` funciona instantáneamente para `n=4..11`
+(no para `n=3`, sin importancia — ahí el método viejo ya es trivial). Cada tabla trae:
+
+- `UnderlyingGroup(tom)`: el propio `S_n` concreto (grupo de permutaciones real).
+- `RepresentativeTom(tom, i)`: un **subgrupo concreto** (con generadores reales) para cada una
+  de las clases de conjugación de *todos* los subgrupos de `S_n` — no solo datos abstractos.
+
+Medido: filtrar las clases abelianas (recorrer todas las clases y comprobar `IsAbelian`) tarda
+`S_9`: 0.01s, `S_10`: 0.02s, `S_11`: 0.1s — donde el método viejo (`ConjugacyClassesSubgroups`)
+tardaba 51s en `S_9` y no terminaba en `S_10` en 10 minutos. Esto es una mejora de varios
+órdenes de magnitud, **y de paso resuelve el problema de Goursat**: como GAP ya calculó
+correctamente todas las clases de conjugación de subgrupos (incluidos los productos
+subdirectos), no hace falta re-derivar esa clasificación a mano.
+
+**Plan.** No hace falta el rediseño matemático difícil. Se delega a Codex una nueva tarea,
+mucho mejor informada que la primera: conectar `TableOfMarks`/`RepresentativeTom` como fuente
+de los `H` en `bc_structure.g`, manteniendo el resto del pipeline (Centralizer, Normalizer,
+IntermediateSubgroups, Orbits) exactamente igual, con la misma disciplina de verificación
+cruzada contra el método viejo para `S_4..S_8` antes de confiar en `S_9,S_10,S_11`.
+
+Despachado como tarea B2, carpeta `/Users/juancagc/Groups/task-sn-tomlib`.
