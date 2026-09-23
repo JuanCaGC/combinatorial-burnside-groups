@@ -28,6 +28,7 @@ using Oscar
 using Printf
 
 export bc, bc_structure, bc_direct, AbGroup, ab, format_ab, load_gap!, gapobj, npairs
+export certify_snf
 
 const GAPFILE = joinpath(@__DIR__, "bc_structure.g")
 const _gap_loaded = Ref(false)
@@ -159,6 +160,33 @@ end
 # ---------------------------------------------------------------------------
 
 const Row = Dict{Int,Int}
+
+"""
+    certify_snf(rows::Vector{Row}, ncols::Int) -> (A, U, V, D)
+
+Build the original integer relation matrix (one row per input relation, including
+zero rows) and return a Smith certificate: `U*A*V == D`, with square unimodular
+`U` and `V`. No unit-pivot elimination is used and `rows` is not mutated.
+All matrices are over arbitrary-precision `ZZ`. Intended for small/moderate
+presentations: the dense left transform has `length(rows)^2` entries.
+
+Independently check the product, `abs(det(U)) == abs(det(V)) == 1`, diagonality,
+and divisibility of successive nonzero diagonal entries of `D` (zeros last).
+If its rank is r, the row cokernel has free rank `ncols-r`; diagonal entries
+of absolute value > 1 give the cyclic torsion factors. Call before passing rows
+to `cokernel_group`, which mutates its input. Use `show(stdout, "text/plain", A)`
+(and similarly U, V, D) to display the returned certificate.
+"""
+function certify_snf(rows::Vector{Row}, ncols::Int)
+    ncols >= 0 || throw(ArgumentError("ncols must be nonnegative"))
+    A = zero_matrix(ZZ, length(rows), ncols)
+    for (i, row) in enumerate(rows), (j, value) in row
+        1 <= j <= ncols || throw(ArgumentError("relation column $j outside 1:$ncols"))
+        A[i, j] = ZZ(value)
+    end
+    D, U, V = snf_with_transform(A)
+    return A, U, V, D
+end
 
 """
 Z^ncols / <rows>.  Repeatedly uses a relation with a coefficient +-1 to
@@ -375,9 +403,11 @@ end
 B_n(H)/(C): H = prod Z/d_i, `perms` = permutations of H^ induced by the group
 of N_G(H) n N_G(Y).  Returns (AbGroup, info).  If `extra_vanishing`, also impose
 the (redundant, by [KT, Prop 4.7]) vanishing for every sub-multiset summing to 0.
+With `return_presentation=true`, instead return `(rows, ncols)` before any
+elimination, for use with `certify_snf`; the default computation is unchanged.
 """
 function bn_quotient(d::Vector{Int}, n::Int, perms::Vector{Vector{Int}};
-                     extra_vanishing::Bool=false)
+                     extra_vanishing::Bool=false, return_presentation::Bool=false)
     ctx = CharCtx(d)
     m = ctx.m
     gens = [ms for ms in multisets(m, n) if generates_all(ctx, ms)]
@@ -425,6 +455,7 @@ function bn_quotient(d::Vector{Int}, n::Int, perms::Vector{Vector{Int}};
             sort(βg) != β && addrow!(β => 1, βg => -1)
         end
     end
+    return_presentation && return (rows, length(gens))
     G, sz = cokernel_group(rows, length(gens))
     return G, (ngens=length(gens), nrels=length(rows), dense=sz)
 end
