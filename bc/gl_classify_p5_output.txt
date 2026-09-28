@@ -1,0 +1,30 @@
+Group (double check) = (Z/5)^2 × Z^46
+moduli = [5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+torsion coordinates = [1, 2] free coordinates (count) = 46
+
+--- Block-diagonal check (does (Z/5)^2 split off as its own submodule?) ---
+T: torsion-row/free-col all zero = true  free-row/torsion-col all zero = false
+D: torsion-row/free-col all zero = true  free-row/torsion-col all zero = false
+S: torsion-row/free-col all zero = true  free-row/torsion-col all zero = false
+=> (Z/5)^2 is an invariant SUBMODULE (torsion rows never leak into free
+   columns); the extension does not split (free rows can leak into torsion
+   columns). So Z^46 = M/(Z/5)^2 is a well-defined QUOTIENT module, and
+   (Z/5)^2 is a well-defined SUBmodule. Each is classified separately below;
+   this does not determine the extension class gluing them.
+
+=== Part A: (Z/5)^2 submodule, mod 5 ===
+T_torsion_mod5 = [1 0; 0 1]
+D_torsion_mod5 = [0 1; 1 0]
+S_torsion_mod5 = [1 0; 0 1]
+Part A result: Dict{Symbol, Any}(:closure_size => 480, :image_order => 2, :found_contragredient_intertwiner => false, :size_G => 480, :inconsistencies => 0, :factors_through_det_qr_partial => true)
+
+=== Part B: Z^46 quotient, ordinary character classification ===
+Part B elapsed: 0.25380492210388184s
+degs = Any[1, 1, 1, 1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6]
+closure_size = 480
+sum_check = 46
+mults = Any[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 0, 1, 1, 1, 1]
+chi_inner_chi = 10
+size_G = 480
+inconsistencies = 0
+num_classes = 24

@@ -297,13 +297,64 @@ concern raised in the planning notes (`gl_module_notes.md` §5) that module-reco
 machinery might not be available in this environment: it is available, under GAP's own name
 for it rather than the package name assumed going in.
 
-**Scope.** This is Priority 1/1b/3 data plus two fully worked, independently-checked examples
-($p=2$ and, after the follow-up above, $p=3$), not a general answer to Problem 6.1. Not
-attempted: $r=3$ actions, $m<r$ induced pieces, or ring multiplication. See `gl_module_notes.md`
-for the parabolic-induction argument, `gl_module_codex_report.md` for the original
-computational log, and `gl_classify_p3.jl`/`gl_classify_p3_output.txt` for the $p=3$
-classification (raw tables, GAP/Python output, Smith-normal-form certificates, character
-values).
+**A third case, $p=5$.** Extending the same computation to $p=5$ (still $r=2,n=2$) is a direct
+reuse of the certified pipeline (`gl_action.jl`'s `run_action`, parametrized by $p$ already):
+$\mathrm{GL}_2(\mathbb F_5)$ has order $480$, the construction finished in under $5$ seconds,
+and every certificate check passed ($1440/1440$ composition-product checks, full and residual
+Smith-normal-form certificates, all as for $p=2,3$). Unlike $p=2,3$, the module here has
+torsion: $\mathcal{BC}_2(\mathbb F_5^2)=(\mathbb Z/5)^2\times\mathbb Z^{46}$. A structural check
+(does the action matrix mix the torsion and free coordinates) shows $(\mathbb Z/5)^2$ is an
+invariant **submodule** (its coordinates never receive contributions from the free ones), but
+the extension does not split (the free coordinates do pick up torsion contributions under the
+action), so $\mathbb Z^{46}$ is only a well-defined **quotient** module, not a submodule
+sitting inside $\mathcal{BC}_2(\mathbb F_5^2)$. Each piece was classified separately, since the
+composition factors are well-defined even when the extension class between them is not
+determined by this computation.
+
+*The torsion piece, mod $5$.* Reduced mod $5$, the submodule's action was checked against
+every one of the $480$ group elements (not just the three generators), with zero
+inconsistencies. It does **not** match the natural module or its dual: two of the three
+generators act as the identity. Testing directly against the hypothesis that the action
+factors through the quadratic-residue character of the determinant (trivial when
+$\det(g)$ is a nonzero square mod $5$, a fixed order-$2$ involution otherwise) confirmed it
+exactly, checked over the full group. This is a genuinely different kind of answer from the
+$p=2,3$ cases: not an irreducible or faithful piece, but a `1`-dimensional-in-effect action
+(image of order $2$) riding on a $2$-dimensional space.
+
+*The free quotient, $\mathbb Z^{46}$.* Its ordinary character was computed the same way as
+the $p=3$ case (full $480$-element closure, character values as traces, GAP's own character
+table of the same matrix group) and decomposes as **two distinct twisted-Steinberg
+representations** (multiplicity $1$ each, dimension $5$) **plus five distinct principal
+series representations** (one with multiplicity $2$, four with multiplicity $1$, dimension
+$6$ each): $2\times5+1\times2\times6+4\times1\times6=10+12+24=46$, matching exactly, with
+$\langle\chi,\chi\rangle=10$ (sum of the multiplicities squared) confirming the count. The
+general degree classification of $\mathrm{GL}_2(\mathbb F_q)$'s ordinary irreducibles used
+for $p=3$ generalizes cleanly to $q=5$: $4$ linear, $4$ twisted-Steinberg (degree $5$), $6$
+principal series (degree $6$), $10$ cuspidal (degree $4$), sum of squares
+$4+100+216+160=480$, matching $|\mathrm{GL}_2(\mathbb F_5)|$ exactly. None of the ten
+cuspidal representations, and none of the four linear ones, appear in this particular
+module.
+
+*Two real bugs found and fixed while computing this*, in the spirit of the rest of this
+report: GAP's `Z(5)^2` does not mean "the field element $2$" (it means the primitive
+generator `Z(5)` raised to the second power, which is $4$ if `Z(5)`$=2$), silently producing a
+smaller subgroup of order $240$ instead of $480$ until caught by exactly the same
+full-closure consistency check used for $p=3$'s composition-order correction. Separately,
+$\mathrm{GL}_2(\mathbb F_5)$'s ordinary character table is not all-rational (unlike
+$\mathrm{GL}_2(\mathbb F_3)$'s, which was rational by luck, not by a general pattern), so the
+multiplicity computation needed an explicit reduction step to a plain rational integer before
+the result could leave GAP. Both are documented in `gl_classify_p5.jl`.
+
+**Scope.** This is Priority 1/1b/3 data plus three fully worked, independently-checked
+examples ($p=2$, $p=3$, and now $p=5$), not a general answer to Problem 6.1. Not attempted:
+$r=3$ actions, $m<r$ induced pieces, or ring multiplication. What the $p=5$ case adds is a
+second data point for the free-quotient pattern (two very different decompositions so far,
+no visible pattern across primes yet) and a first example of a case where the module is not a
+direct sum, which the $p=2,3$ cases did not raise at all. See `gl_module_notes.md` for the
+parabolic-induction argument, `gl_module_codex_report.md` for the original computational log,
+`gl_classify_p3.jl`/`gl_classify_p3_output.txt` for the $p=3$ classification, and
+`gl_action_p5.jl`/`gl_classify_p5.jl` with their outputs for the $p=5$ case (raw tables,
+GAP output, Smith-normal-form certificates, character values).
 
 ## Not done / not verified
 
@@ -319,11 +370,13 @@ values).
 * The restriction maps $\mathrm{res}^G_{G'}$ and the ring structure on
   $\mathcal{BC}_*(G)$ (§4 of the paper) are not implemented.
 * The $\mathrm{GL}_r(\mathbb F_p)$-module structure of $\mathcal{BC}_n(\mathbb F_p^r)$
-  (Problem 6.1) is worked out for two cases only ($p=2,3$, both $r=2,n=2$); $r=3$ actions,
+  (Problem 6.1) is worked out for three cases only ($p=2,3,5$, all $r=2,n=2$). $r=3$ actions,
   induced pieces with $m<r$, and the ring structure are open. The classification found for
-  these two cases (contragredient natural module at $p=2$; a Steinberg-type $\oplus$
-  principal-series decomposition at $p=3$) is not yet connected to any general statement
-  about the induced-module structure argued for in `gl_module_notes.md`.
+  these three cases (contragredient natural module at $p=2$, a Steinberg-type plus
+  principal-series decomposition at $p=3$, a reducible-but-not-split extension at $p=5$ whose
+  two pieces decompose differently again) shows no visible pattern across primes yet, and is
+  not connected to any general statement about the induced-module structure argued for in
+  `gl_module_notes.md`.
 * The definition-level cross-check only covers $|G|\lesssim700$ and small $n$ — much
   slower than the Theorem-5.2-based route.
 
