@@ -1,0 +1,4 @@
+2026/10/07 11:43:46.0321: [11851749]:  WARNING:       mongoc: Falling back to malloc for counters.
+GENERATORS p=2 r=4 labels=["T", "C", "S"] generated_order=20160 GL_order=20160
+PRESENTATION characters=16 candidates=3876 generating_tuples=840 relations=5040 seconds=0.03488302230834961
+TIMEOUT 240s WALL_SECONDS 240.035

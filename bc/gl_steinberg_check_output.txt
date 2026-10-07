@@ -1,0 +1,24 @@
+=========== r = n = 3 ===========
+N (generating tuples) = 28   relation rows = 84
+rank of relations mod 2 = 20  => quotient dimension should be 8
+order of <T,C,S> in GL(3,2) = 168   |GL(3,2)| = 168
+absolutely_irreducible = true
+factor_dims = Any[8]
+image_group_order = 168
+irreducible = true
+odd_classes_order_brauer_2partOfCentralizer = Any[Any[1, 8, 8], Any[3, -1, 1], Any[7, 1, 1], Any[7, 1, 1]]
+quotient_dim = 8
+relation_space_invariant = true
+(MeatAxe+class analysis time: 0.12s)
+=========== r = n = 4 ===========
+N (generating tuples) = 840   relation rows = 5040
+rank of relations mod 2 = 776  => quotient dimension should be 64
+order of <T,C,S> in GL(4,2) = 20160   |GL(4,2)| = 20160
+absolutely_irreducible = true
+factor_dims = Any[64]
+image_group_order = 20160
+irreducible = true
+odd_classes_order_brauer_2partOfCentralizer = Any[Any[1, 64, 64], Any[7, 1, 1], Any[7, 1, 1], Any[3, -2, 2], Any[3, 4, 4], Any[5, -1, 1], Any[15, -1, 1], Any[15, -1, 1]]
+quotient_dim = 64
+relation_space_invariant = true
+(MeatAxe+class analysis time: 4.01s)

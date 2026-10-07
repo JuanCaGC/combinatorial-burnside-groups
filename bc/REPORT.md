@@ -345,16 +345,54 @@ $\mathrm{GL}_2(\mathbb F_3)$'s, which was rational by luck, not by a general pat
 multiplicity computation needed an explicit reduction step to a plain rational integer before
 the result could leave GAP. Both are documented in `gl_classify_p5.jl`.
 
+**The top piece for $p=2$ and the Steinberg module ($r=n=2,3,4$).** For $p=2$ the top piece
+$\mathcal B_n(\mathbb F_2^n)$ is $(\mathbb Z/2)^{2^{n(n-1)/2}}$ for $n=2,3,4$, i.e. of dimension
+$2,8,64$, which is the dimension of the Steinberg module of $\mathrm{GL}_n(\mathbb F_2)$
+(for $n=1$ the value is $\mathbb Z$, so the pattern starts at $n=2$). A dimension match alone
+is weak evidence, so the module structure was tested directly. For $n=3$, $\mathrm{GL}_3(\mathbb F_2)$
+(order $168$) acts on $(\mathbb Z/2)^8$, with the action matrices obtained by generalizing the
+certified pipeline to $r=3$ (`gl_action_r3.jl`, same certificate checks as for $r=2$, composition
+checked on all $168$ elements). GAP's MeatAxe (`MTX`) shows the module is irreducible and
+absolutely irreducible of dimension $8$, self-dual, and the image group has order $168$. The Brauer
+character equals $8,-1,1$ on elements of order $1,3,7$, the Steinberg values, and the fixed space
+of a Sylow $2$-subgroup has dimension $1$. Since the $2$-modular irreducibles of $\mathrm{GL}_3(\mathbb F_2)$
+have dimensions $1,3,3,8$, an irreducible of dimension $8$ is the Steinberg module.
+
+*Independent route.* `gl_steinberg_check.jl` repeats the test without the elimination and
+Smith-normal-form machinery. Because $\mathcal B_n(\mathbb F_2^n)$ is an elementary abelian
+$2$-group, it equals $\mathbb F_2^N/(\text{relations mod }2)$ with $N$ the number of generating
+tuples. $\mathrm{GL}_n(\mathbb F_2)$ permutes the tuples, the relation subspace is checked to be
+invariant, and the quotient module goes to MeatAxe. For $n=3$ ($N=28$) this reproduces the result
+above. For $n=4$ ($N=840$, relation rank $776$, quotient dimension $64$, group of order $20160$)
+the module is again irreducible and absolutely irreducible of dimension $64$, and on every
+odd-order conjugacy class the absolute value of the Brauer character equals the $2$-part of the
+centralizer order, as it does for the Steinberg character on $2$-regular elements. The signs were
+not compared separately, and the identification for $n=4$ rests on irreducibility plus these
+absolute values.
+
+*What did not work.* The first attempt at $r=4$ with the full certified pipeline did not finish
+(a $5040\times5040$ Smith transform exceeded a $240$s limit), see `gl_r3_codex_report.md`. The
+elimination and the residual Smith form themselves ran in seconds and gave $(\mathbb Z/2)^{64}$.
+The $\mathbb F_2$-linear-algebra route above avoids that bottleneck. The case $n=5$ ($376{,}992$
+candidate tuples) was not attempted.
+
+*Status.* The statement $\mathcal B_n(\mathbb F_2^n)\cong\mathrm{St}$ is verified for $n=2,3,4$ and
+is a conjecture for general $n$. For odd $p$ the top piece is not a Steinberg module (it is free
+of larger rank, e.g. $\mathbb Z^7$ for $p=3$), although twisted Steinberg representations occur
+among its constituents for $p=3,5$. No relation between the two behaviours has been established.
+
 **Scope.** This is Priority 1/1b/3 data plus three fully worked, independently-checked
-examples ($p=2$, $p=3$, and now $p=5$), not a general answer to Problem 6.1. Not attempted:
-$r=3$ actions, $m<r$ induced pieces, or ring multiplication. What the $p=5$ case adds is a
+examples ($p=2$, $p=3$, and now $p=5$ with $r=n=2$), plus the Steinberg test for $p=2$ at
+$r=n=3,4$, and not a general answer to Problem 6.1. Not attempted: $r=3$ actions for odd $p$,
+$m<r$ induced pieces, or ring multiplication. What the $p=5$ case adds is a
 second data point for the free-quotient pattern (two very different decompositions so far,
 no visible pattern across primes yet) and a first example of a case where the module is not a
 direct sum, which the $p=2,3$ cases did not raise at all. See `gl_module_notes.md` for the
 parabolic-induction argument, `gl_module_codex_report.md` for the original computational log,
 `gl_classify_p3.jl`/`gl_classify_p3_output.txt` for the $p=3$ classification, and
 `gl_action_p5.jl`/`gl_classify_p5.jl` with their outputs for the $p=5$ case (raw tables,
-GAP output, Smith-normal-form certificates, character values).
+GAP output, Smith-normal-form certificates, character values), and `gl_action_r3.jl`,
+`gl_mtx_r3.*`, `gl_steinberg_check.jl` with their outputs for the Steinberg test.
 
 ## Not done / not verified
 
@@ -370,7 +408,8 @@ GAP output, Smith-normal-form certificates, character values).
 * The restriction maps $\mathrm{res}^G_{G'}$ and the ring structure on
   $\mathcal{BC}_*(G)$ (§4 of the paper) are not implemented.
 * The $\mathrm{GL}_r(\mathbb F_p)$-module structure of $\mathcal{BC}_n(\mathbb F_p^r)$
-  (Problem 6.1) is worked out for three cases only ($p=2,3,5$, all $r=2,n=2$). $r=3$ actions,
+  (Problem 6.1) is worked out for three cases with $r=n=2$ ($p=2,3,5$) and for $p=2$ at
+  $r=n=3,4$ (Steinberg module, see above). $r=3$ actions for odd $p$,
   induced pieces with $m<r$, and the ring structure are open. The classification found for
   these three cases (contragredient natural module at $p=2$, a Steinberg-type plus
   principal-series decomposition at $p=3$, a reducible-but-not-split extension at $p=5$ whose

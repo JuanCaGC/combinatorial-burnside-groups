@@ -1,0 +1,8 @@
+2026/10/07 11:42:41.0476: [11849023]:  WARNING:       mongoc: Falling back to malloc for counters.
+PROBE p=2 r=4 n=4 Julia=1.12.4 Oscar=1.8.2
+PROBE_PRESENTATION candidates=3876 generating_tuples=840 relations=5040 seconds=0.015748023986816406
+PROBE_FULL_LEFT_TRANSFORM_ENTRIES 25401600
+PROBE_ELIMINATION seconds=0.030961036682128906 pivots=776 residual=(3712, 64)
+PROBE_RESIDUAL_SNF seconds=2.4322988986968994 moduli=[2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]
+PROBE_COMPLETE
+RUN_EXIT 0 WALL_SECONDS 38.464

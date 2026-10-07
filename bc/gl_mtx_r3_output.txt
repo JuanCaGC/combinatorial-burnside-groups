@@ -1,0 +1,18 @@
+2026/10/07 11:46:03.0312: [11855276]:  WARNING:       mongoc: Falling back to malloc for counters.
+JULIA_VERSION 1.12.4 OSCAR_VERSION 1.8.2
+GAP_VERSION 4.16.1
+CONVENTION hom_closure=168 hom_contradictions=0 hom_edges=1008
+CONVENTION anti_closure=168 anti_contradictions=0 anti_edges=1008
+DIRECT_ACTION hom_assignment_mismatches=140 anti_assignment_mismatches=0 hom_product_mismatches=970 anti_product_mismatches=0 edges=1008
+BFS_AMBIGUITY map_S_transpose_g_S_fixes_generators=true explains_both_assignments=true
+SELECTED anti_homomorphism. GAP receives transposes of row matrices
+GENUINE_HOM closure=168 contradictions=0 edges=1008 image_order=168
+MTX dimension=8 irreducible=true absolutely_irreducible=true factor_dimensions=[ 8 ] self_dual=true
+SYLOW_FIXED subgroup_order=8 dimension=1 Steinberg_expected=1 match=true
+BRAUER order=1 class_size=1 value=8 eigen_multiplicities=[ 8 ] Steinberg_expected=8 match=true
+BRAUER order=7 class_size=24 value=1 eigen_multiplicities=[ 2, 1, 1, 1, 1, 1, 1 ] Steinberg_expected=1 match=true
+BRAUER order=7 class_size=24 value=1 eigen_multiplicities=[ 2, 1, 1, 1, 1, 1, 1 ] Steinberg_expected=1 match=true
+BRAUER order=3 class_size=56 value=-1 eigen_multiplicities=[ 2, 3, 3 ] Steinberg_expected=-1 match=true
+MTX_ANALYSIS_CPU_SECONDS 99/1000
+MTX_SCRIPT_COMPLETE
+RUN_EXIT 0 WALL_SECONDS 12.657

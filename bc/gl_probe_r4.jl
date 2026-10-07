@@ -1,0 +1,25 @@
+include("BurnsideC.jl")
+using .BurnsideC, Oscar
+include("gl_tracked_elimination.jl")
+function probe()
+    println("PROBE p=2 r=4 n=4 Julia=$VERSION Oscar=$(pkgversion(Oscar))")
+    flush(stdout)
+    t = time()
+    ctx = BurnsideC.CharCtx(fill(2,4))
+    candidates = BurnsideC.multisets(ctx.m,4)
+    rows,N = BurnsideC.bn_quotient(fill(2,4),4,Vector{Int}[]; return_presentation=true)
+    println("PROBE_PRESENTATION candidates=$(length(candidates)) generating_tuples=$N relations=$(length(rows)) seconds=$(time()-t)")
+    println("PROBE_FULL_LEFT_TRANSFORM_ENTRIES $(length(rows)^2)")
+    flush(stdout)
+    t = time()
+    E,J,M,survivors,trace = tracked_elimination(deepcopy(rows),N)
+    println("PROBE_ELIMINATION seconds=$(time()-t) pivots=$(length(trace)) residual=$(size(M))")
+    flush(stdout)
+    t = time()
+    D,U,V = snf_with_transform(M)
+    @assert U*M*V == D
+    ds = [Int(D[j,j]) for j in 1:ncols(D)]
+    println("PROBE_RESIDUAL_SNF seconds=$(time()-t) moduli=$ds")
+    println("PROBE_COMPLETE")
+end
+probe()
