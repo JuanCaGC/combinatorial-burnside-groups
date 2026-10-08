@@ -381,6 +381,94 @@ is a conjecture for general $n$. For odd $p$ the top piece is not a Steinberg mo
 of larger rank, e.g. $\mathbb Z^7$ for $p=3$), although twisted Steinberg representations occur
 among its constituents for $p=3,5$. No relation between the two behaviours has been established.
 
+**The top piece for larger $p$ ($r=n=2$, $p$ up to $23$).** The abelian group of the top piece
+$B_2(\mathbb F_p^2)$ was computed with the untracked quotient routine for $p=3,\dots,23$:
+
+| $p$ | torsion | free rank |
+|---|---|---|
+| 3 | none | 7 |
+| 5 | $(\mathbb Z/5)^2$ | 46 |
+| 7 | $(\mathbb Z/2)^3\times(\mathbb Z/7)^3$ | 159 |
+| 11 | $(\mathbb Z/5)^5\times(\mathbb Z/11)^5$ | 855 |
+| 13 | $(\mathbb Z/7)^6\times(\mathbb Z/13)^6$ | 1602 |
+| 17 | $(\mathbb Z/4)^8\times(\mathbb Z/3)^8\times(\mathbb Z/17)^8$ | 4424 |
+| 19 | $(\mathbb Z/3)^9\times(\mathbb Z/5)^9\times(\mathbb Z/19)^9$ | 6759 |
+| 23 | $(\mathbb Z/2)^{11}\times(\mathbb Z/11)^{11}\times(\mathbb Z/23)^{11}$ | 14047 |
+
+For $p\ge5$ the torsion is
+$(\mathbb Z/p)^{(p-1)/2}\times\big(\mathbb Z/\tfrac{p^2-1}{24}\big)^{(p-1)/2}$. This was read off from
+$p=5,7,11,13$ and then correctly predicted $p=17,19,23$, which were computed afterwards. It is an
+empirical pattern on seven primes and has no proof. The case $p=3$ has no torsion (here
+$p^2-1$ is not divisible by $24$). The integer $(p^2-1)/12$ also appears in the dihedral
+formula of Paper §6.2, but no relation between the two is claimed.
+
+*$p=7$ in detail* (certified action as for $p=2,3,5$, $|\mathrm{GL}_2(\mathbb F_7)|=2016$, all
+$6048$ composition checks passed, `gl_action_p7.jl`, `gl_classify_p7.jl`, report
+`gl_p7_codex_report.md`). The module is $(\mathbb Z/14)^3\times\mathbb Z^{159}$. The torsion is an
+invariant submodule. Checked over all $2016$ elements, the action on it depends only on $\det g$.
+The $7$-primary part is $\mathbf 1\oplus\det^2\oplus\det^4$, and the $2$-primary part is the regular
+representation of $\mathbb Z/3$ over $\mathbb F_2$ (a trivial factor plus a $2$-dimensional
+irreducible), both through the quotient of order $3$ of $\mathbb F_7^\times$. The free quotient
+$\mathbb Z^{159}$ decomposes as $3$ cuspidal constituents (degree $6$), $3$ twisted-Steinberg
+(degree $7$) and $12$ principal series (degree $8$, three with multiplicity $2$ and nine with
+multiplicity $1$), with $\langle\chi,\chi\rangle=27$ and
+$3\cdot6+3\cdot7+(3\cdot2+9)\cdot8=159$.
+
+*Convention.* For $p=7$ the action is again an anti-homomorphism: comparing the directly computed
+action of each of the $2016$ elements with the two BFS assignments gives $1891$ mismatches for
+$R_{gh}=R_gR_h$ and $0$ for $R_{gh}=R_hR_g$.
+
+*Non-splitting, and a correction to an earlier justification.* The extension of the free quotient by
+the torsion does not split for $p=7$ at either prime, and, now established properly, not for $p=5$.
+A section of the free quotient is $\mathrm{GL}_2$-equivariant exactly when a linear system over
+$\mathbb F_\ell$ has a solution. For $p=7$ it has $1431$ equations and $477$ unknowns, with
+coefficient rank $477$ and augmented rank $478$, at $\ell=2$ and at $\ell=7$. For $p=5$ it has
+$276$ equations, $92$ unknowns, rank $92$ and augmented rank $93$. The earlier statement for $p=5$
+rested only on the free-rows/torsion-columns block being nonzero in the chosen coordinates. That
+shows the chosen lifts are not invariant but not that no invariant lifts exist, so it was not a
+proof. The linear-system computation is.
+
+*Torsion and the free quotient for $p=5,7,11,13$* (an independent computation,
+`gl_verify.jl`, which takes the character from its definition as the trace of one representative
+per conjugacy class and tests the torsion block on every element of $\mathrm{GL}_2(\mathbb F_p)$).
+For $p=5,7,11,13$ the torsion block depends only on $\det g$ (checked on all $480$, $2016$,
+$13200$, $26208$ elements), and its $p$-primary part is $\bigoplus_{j=0}^{(p-3)/2}\det^{2j}$, the
+even powers of $\det$, each once. The free quotient decomposes as follows (twisted-Steinberg
+constituents are $\mathrm{St}\otimes(\chi\circ\det)$, labelled by the parity of $\chi$):
+
+| $p$ | rank | cuspidal | twisted Steinberg | principal series | $\langle\chi,\chi\rangle$ |
+|---|---|---|---|---|---|
+| 3 | 7 | 0 | 1, odd $\chi$, mult. 1 | 1 | 2 |
+| 5 | 46 | 0 | 2, odd $\chi$, mult. 1 | 5 distinct (4 once, 1 twice) | 10 |
+| 7 | 159 | 3, mult. 1 | 3, odd $\chi$, mult. 1 | 12 distinct (9 once, 3 twice) | 27 |
+| 11 | 855 | 15, mult. 1 | 10, even $\chi$ mult. 1, odd $\chi$ mult. 2 | 35 distinct (25 once, 10 twice) | 105 |
+| 13 | 1602 | 36, mult. 1 | 6, odd $\chi$, mult. 1 | 57 distinct (42 once, 9 twice, 6 three times) | 174 |
+| 17 | 4424 | 64 (48 once, 16 twice) | 16, even $\chi$ mult. 1, odd $\chi$ mult. 2 | 108 distinct (80 once, 12 twice, 16 three times) | 424 |
+
+In each row the dimension and $\langle\chi,\chi\rangle=\sum m_i^2$ were checked. No linear
+characters occur. For $p=3,5,7$ the number of distinct twisted-Steinberg constituents is
+$(p-1)/2$, each with multiplicity $1$, and this was extrapolated to $p=11$ before computing it.
+**The extrapolation failed**: $p=11$ has all $10$ of them, with the even-$\chi$ ones once and the
+odd-$\chi$ ones twice. At $p=13$ the pattern $(p-1)/2$ distinct, each once, returns, and at
+$p=17$ the behaviour of $p=11$ appears again (all $16$, even $\chi$ once, odd $\chi$ twice). So the
+twisted-Steinberg constituents follow one of two patterns, "odd $\chi$ once" for $p=3,5,7,13$ and
+"even $\chi$ once, odd $\chi$ twice" for $p=11,17$.
+
+*An observation, not a result.* The primes $2,3,5,7,13$ are exactly those for which the modular
+curve $X_0(p)$ has genus $0$, and $p=11,17$ both have genus $1$. The prediction that $p=17$ would
+deviate was made from this coincidence before $p=17$ was computed, and it held. This is one
+successful test on top of the fit to $3,5,7,11,13$, so it is weak evidence. A competing description
+that fits the same six primes is "$p\equiv2\pmod 3$ and $p>5$". The two differ at $p=19$ (genus $1$,
+but $19\equiv1\pmod3$), which was not computed: with the present implementation $p=17$ already needs
+about $11.6$ GB and $8$ minutes, and $p=19$ would need roughly $28$ GB. The genus of $X_1(p)$ also
+appears in the paper's dihedral formula (Paper §6.2), but it does not distinguish $p=13$ from
+$p=11$, so it is not the relevant quantity here.
+
+*What was and was not certified for larger $p$.* The $p=11,13$ rows come from the same tracked
+elimination and Smith-normal-form pipeline as the certified cases, with the quotient-map identity
+$L\,Q=I$ asserted, but without the full certificate battery and without the composition checks over
+the whole group. The non-splitting test was run only for $p=5,7$.
+
 **Scope.** This is Priority 1/1b/3 data plus three fully worked, independently-checked
 examples ($p=2$, $p=3$, and now $p=5$ with $r=n=2$), plus the Steinberg test for $p=2$ at
 $r=n=3,4$, and not a general answer to Problem 6.1. Not attempted: $r=3$ actions for odd $p$,

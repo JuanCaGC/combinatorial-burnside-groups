@@ -1,0 +1,27 @@
+2026/10/07 23:08:51.0165: [2080079]:  WARNING:       mongoc: Falling back to malloc for counters.
+DIMENSIONS torsion_moduli=[14, 14, 14] free_rank=159
+DIRECT_CONVENTION elements=2016 hom_assignment_mismatches=1891 anti_assignment_mismatches=0
+SELECTED R_(g*h)=R_h*R_g. Transposes define the genuine homomorphism.
+BLOCK T torsion_rows_free_columns_zero=true free_rows_torsion_columns_zero=false
+BLOCK D torsion_rows_free_columns_zero=true free_rows_torsion_columns_zero=false
+BLOCK S torsion_rows_free_columns_zero=true free_rows_torsion_columns_zero=false
+CHARACTER character = Any[159, -6, 0, 0, 0, 0, 15, 12, 0, 0, 0, 0, -9, 3, 3, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, -15, 0, 0, 3, 0, 0, -3, 0, -3, 0, 0, 0, 3]
+CHARACTER class_orders = Any[1, 14, 3, 21, 6, 42, 2, 7, 6, 42, 3, 21, 4, 8, 8, 48, 48, 48, 48, 12, 24, 24, 16, 16, 16, 16, 12, 24, 24, 48, 48, 48, 48, 6, 6, 2, 6, 6, 6, 3, 6, 3, 6, 6, 6, 6, 3, 6]
+CHARACTER class_sizes = Any[1, 48, 1, 48, 1, 48, 1, 48, 1, 48, 1, 48, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56]
+CHARACTER constituents = Any[Any[7, 6, 1], Any[26, 6, 1], Any[27, 6, 1], Any[28, 7, 1], Any[30, 7, 1], Any[31, 7, 1], Any[34, 8, 2], Any[36, 8, 1], Any[37, 8, 2], Any[38, 8, 2], Any[41, 8, 1], Any[42, 8, 1], Any[43, 8, 1], Any[44, 8, 1], Any[45, 8, 1], Any[46, 8, 1], Any[47, 8, 1], Any[48, 8, 1]]
+CHARACTER degree_counts = Any[Any[1, 6], Any[6, 21], Any[7, 6], Any[8, 15]]
+CHARACTER degree_squares = 2016
+CHARACTER degrees = Any[1, 1, 1, 1, 1, 1, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8]
+CHARACTER dimension = 159
+CHARACTER inner_product = 27
+CHARACTER multiplicities = Any[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 2, 0, 1, 2, 2, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1]
+CHARACTER sum_multiplicities_squared = 27
+MTX Dict{Symbol, Any}(:prime => 2, :factor_dimensions => Any[1, 2], :natural_isomorphic => false, :dual_natural_isomorphic => false, :image_order => 3, :irreducible => false, :dimension => 3, :generator_matrices => Any[Any[Any[1, 0, 0], Any[0, 1, 0], Any[0, 0, 1]], Any[Any[0, 0, 1], Any[1, 0, 0], Any[0, 1, 0]], Any[Any[1, 0, 0], Any[0, 1, 0], Any[0, 0, 1]]])
+DETERMINANT prime=2 exhaustive_elements=2016 mismatches=0 factors_through_det=true values=Pair{Int64, Any}[1 => [[1, 0, 0], [0, 1, 0], [0, 0, 1]], 2 => [[0, 0, 1], [1, 0, 0], [0, 1, 0]], 3 => [[0, 1, 0], [0, 0, 1], [1, 0, 0]], 4 => [[0, 1, 0], [0, 0, 1], [1, 0, 0]], 5 => [[0, 0, 1], [1, 0, 0], [0, 1, 0]], 6 => [[1, 0, 0], [0, 1, 0], [0, 0, 1]]]
+SPLITTING prime=2 equations=1431 unknowns=477 coefficient_rank=477 augmented_rank=478 solvable=false
+MTX Dict{Symbol, Any}(:prime => 7, :factor_dimensions => Any[1, 1, 1], :natural_isomorphic => false, :dual_natural_isomorphic => false, :image_order => 3, :irreducible => false, :dimension => 3, :generator_matrices => Any[Any[Any[1, 0, 0], Any[0, 1, 0], Any[0, 0, 1]], Any[Any[0, 0, 1], Any[1, 0, 0], Any[0, 1, 0]], Any[Any[1, 0, 0], Any[0, 1, 0], Any[0, 0, 1]]])
+DETERMINANT prime=7 exhaustive_elements=2016 mismatches=0 factors_through_det=true values=Pair{Int64, Any}[1 => [[1, 0, 0], [0, 1, 0], [0, 0, 1]], 2 => [[0, 0, 1], [1, 0, 0], [0, 1, 0]], 3 => [[0, 1, 0], [0, 0, 1], [1, 0, 0]], 4 => [[0, 1, 0], [0, 0, 1], [1, 0, 0]], 5 => [[0, 0, 1], [1, 0, 0], [0, 1, 0]], 6 => [[1, 0, 0], [0, 1, 0], [0, 0, 1]]]
+DETERMINANT_CHARACTER exponents=[0, 1, 2, 3, 4, 5] multiplicities=[1, 0, 1, 0, 1, 0] meaning=direct_sum_of_det_powers
+SPLITTING prime=7 equations=1431 unknowns=477 coefficient_rank=477 augmented_rank=478 solvable=false
+CLASSIFICATION_SECONDS 11.360638834
+RUN_EXIT 0 WALL_SECONDS 23.795

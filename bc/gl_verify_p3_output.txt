@@ -1,0 +1,14 @@
+p=3 primitive root = 2
+N=24  dim=7  torsion moduli=Int64[]  free rank=7
+(1) elements enumerated = 48 (|GL_2(F_3)| = 48)
+(1) number of distinct torsion blocks for each det value (1 = depends only on det): [(1, 1), (2, 1)]
+(1) p-primary part: multiplicity of det^e for e=0..1 = [0, 0]
+(2) |G| = 48  classes = 8
+(2) character values on class representatives: [7, -1, -1, 1, -1, 1, 1, -1] ...
+(2) dimension chi(1) = 7   sum mult*deg = 7   <chi,chi> = 2   sum mult^2 = 2
+(2) constituents (degree, multiplicity): [(3, 1), (4, 1)]
+    linear (degree 1): distinct = 0  multiplicities = Any[]
+    cuspidal (degree 2): distinct = 0  multiplicities = Any[]
+    twisted Steinberg (degree 3): distinct = 1  multiplicities = [1]
+    principal series (degree 4): distinct = 1  multiplicities = [1]
+    twisted Steinberg by parity of chi: even chi multiplicities = Any[]   odd chi multiplicities = [1]   (1 even and 1 odd characters exist)

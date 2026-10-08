@@ -1,0 +1,9 @@
+2026/10/07 23:05:41.0668: [2076850]:  WARNING:       mongoc: Falling back to malloc for counters.
+PREFLIGHT primitive_root=3 generator_group_order=2016 expected=2016
+QUOTIENT_START p=7
+QUOTIENT p=7 group=(Z/2)^3 × (Z/7)^3 × Z^159 torsion=Dict(7 => 3, 2 => 3) free_rank=159 residual=(ngens = 1008, nrels = 1008, dense = (23, 16)) seconds=0.009994029998779297
+QUOTIENT_START p=11
+QUOTIENT p=11 group=(Z/5)^5 × (Z/11)^5 × Z^855 torsion=Dict(5 => 5, 11 => 5) free_rank=855 residual=(ngens = 6600, nrels = 6600, dense = (25, 24)) seconds=0.014694929122924805
+QUOTIENT_START p=13
+QUOTIENT p=13 group=(Z/7)^6 × (Z/13)^6 × Z^1602 torsion=Dict(13 => 6, 7 => 6) free_rank=1602 residual=(ngens = 13104, nrels = 13104, dense = (41, 42)) seconds=0.036041975021362305
+RUN_EXIT 0 WALL_SECONDS 14.226

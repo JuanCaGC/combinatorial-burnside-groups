@@ -1,0 +1,64 @@
+2026/10/07 23:07:42.0564: [2078851]:  WARNING:       mongoc: Falling back to malloc for counters.
+ERROR: LoadError: KeyError: key UUID("7096e527-a00b-46e0-acf2-adc1f9906bee") not found
+Stacktrace:
+  [1] getindex
+    @ ./dict.jl:477 [inlined]
+  [2] decode_type(s::Oscar.Serialization.DeserializerState{Oscar.Serialization.IPCSerializer})
+    @ Oscar.Serialization ~/.julia/packages/Oscar/clzsb/src/Serialization/main.jl:135
+  [3] (::Oscar.Serialization.var"#load_type_and_params##2#load_type_and_params##3"{Oscar.Serialization.DeserializerState{Oscar.Serialization.IPCSerializer}, Type{MatElem}})(obj::String)
+    @ Oscar.Serialization ~/.julia/packages/Oscar/clzsb/src/Serialization/main.jl:393
+  [4] load_node(f::Oscar.Serialization.var"#load_type_and_params##2#load_type_and_params##3"{Oscar.Serialization.DeserializerState{Oscar.Serialization.IPCSerializer}, Type{MatElem}}, s::Oscar.Serialization.DeserializerState{Oscar.Serialization.IPCSerializer}, key::Symbol)
+    @ Oscar.Serialization ~/.julia/packages/Oscar/clzsb/src/Serialization/serializers.jl:292
+  [5] load_type_and_params(s::Oscar.Serialization.DeserializerState{Oscar.Serialization.IPCSerializer}, T::Type)
+    @ Oscar.Serialization ~/.julia/packages/Oscar/clzsb/src/Serialization/main.jl:389
+  [6] (::Oscar.Serialization.var"#load_type_and_params##0#load_type_and_params##1"{Oscar.Serialization.DeserializerState{Oscar.Serialization.IPCSerializer}, Type{MatElem}})(::Dict{Symbol, Any})
+    @ Oscar.Serialization ~/.julia/packages/Oscar/clzsb/src/Serialization/main.jl:366
+  [7] load_node(f::Oscar.Serialization.var"#load_type_and_params##0#load_type_and_params##1"{Oscar.Serialization.DeserializerState{Oscar.Serialization.IPCSerializer}, Type{MatElem}}, s::Oscar.Serialization.DeserializerState{Oscar.Serialization.IPCSerializer}, key::Symbol)
+    @ Oscar.Serialization ~/.julia/packages/Oscar/clzsb/src/Serialization/serializers.jl:292
+  [8] load_type_and_params(s::Oscar.Serialization.DeserializerState{Oscar.Serialization.IPCSerializer}, T::Type, key::Symbol)
+    @ Oscar.Serialization ~/.julia/packages/Oscar/clzsb/src/Serialization/main.jl:365
+  [9] load_typed_object(s::Oscar.Serialization.DeserializerState{Oscar.Serialization.IPCSerializer}; override_params::Nothing)
+    @ Oscar.Serialization ~/.julia/packages/Oscar/clzsb/src/Serialization/main.jl:444
+ [10] load(io::IOStream; params::Nothing, type::Nothing, serializer::Oscar.Serialization.IPCSerializer, with_attrs::Bool)
+    @ Oscar.Serialization ~/.julia/packages/Oscar/clzsb/src/Serialization/main.jl:938
+ [11] load
+    @ ~/.julia/packages/Oscar/clzsb/src/Serialization/main.jl:865 [inlined]
+ [12] deserialize(s::Serializer{IOStream}, T::Type{ZZMatrix})
+    @ Oscar.Serialization ~/.julia/packages/Oscar/clzsb/src/Serialization/main.jl:566
+ [13] handle_deserialize(s::Serializer{IOStream}, b::Int32)
+    @ Serialization ~/.julia/juliaup/julia-1.12.4+0.aarch64.apple.darwin14/share/julia/stdlib/v1.12/Serialization/src/Serialization.jl:915
+ [14] deserialize(s::Serializer{IOStream}, t::DataType)
+    @ Serialization ~/.julia/juliaup/julia-1.12.4+0.aarch64.apple.darwin14/share/julia/stdlib/v1.12/Serialization/src/Serialization.jl:1658
+ [15] handle_deserialize(s::Serializer{IOStream}, b::Int32)
+    @ Serialization ~/.julia/juliaup/julia-1.12.4+0.aarch64.apple.darwin14/share/julia/stdlib/v1.12/Serialization/src/Serialization.jl:915
+ [16] deserialize(s::Serializer{IOStream})
+    @ Serialization ~/.julia/juliaup/julia-1.12.4+0.aarch64.apple.darwin14/share/julia/stdlib/v1.12/Serialization/src/Serialization.jl:851
+ [17] handle_deserialize(s::Serializer{IOStream}, b::Int32)
+    @ Serialization ~/.julia/juliaup/julia-1.12.4+0.aarch64.apple.darwin14/share/julia/stdlib/v1.12/Serialization/src/Serialization.jl:957
+ [18] deserialize
+    @ ~/.julia/juliaup/julia-1.12.4+0.aarch64.apple.darwin14/share/julia/stdlib/v1.12/Serialization/src/Serialization.jl:851 [inlined]
+ [19] deserialize(s::IOStream)
+    @ Serialization ~/.julia/juliaup/julia-1.12.4+0.aarch64.apple.darwin14/share/julia/stdlib/v1.12/Serialization/src/Serialization.jl:838
+ [20] open(f::typeof(deserialize), args::String; kwargs::@Kwargs{})
+    @ Base ./io.jl:410
+ [21] open
+    @ ./io.jl:407 [inlined]
+ [22] deserialize
+    @ ~/.julia/juliaup/julia-1.12.4+0.aarch64.apple.darwin14/share/julia/stdlib/v1.12/Serialization/src/Serialization.jl:848 [inlined]
+ [23] main()
+    @ Main ~/Groups/task-gl-p7/gl_classify_p7.jl:6
+ [24] top-level scope
+    @ ./timing.jl:461
+ [25] include(mapexpr::Function, mod::Module, _path::String)
+    @ Base ./Base.jl:307
+ [26] top-level scope
+    @ ~/Groups/task-gl-p7/gl_bootstrap.jl:9
+ [27] include(mod::Module, _path::String)
+    @ Base ./Base.jl:306
+ [28] exec_options(opts::Base.JLOptions)
+    @ Base ./client.jl:317
+ [29] _start()
+    @ Base ./client.jl:550
+in expression starting at /Users/juancagc/Groups/task-gl-p7/gl_classify_p7.jl:137
+in expression starting at /Users/juancagc/Groups/task-gl-p7/gl_bootstrap.jl:9
+RUN_EXIT 1 WALL_SECONDS 15.997

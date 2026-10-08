@@ -1,0 +1,14 @@
+p=11 primitive root = 2
+N=6600  dim=860  torsion moduli=[55, 55, 55, 55, 55]  free rank=855
+(1) elements enumerated = 13200 (|GL_2(F_11)| = 13200)
+(1) number of distinct torsion blocks for each det value (1 = depends only on det): [(1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1), (8, 1), (9, 1), (10, 1)]
+(1) p-primary part: multiplicity of det^e for e=0..9 = [1, 0, 1, 0, 1, 0, 1, 0, 1, 0]
+(2) |G| = 13200  classes = 120
+(2) character values on class representatives: [855, -20, 0, 0, 0, 0, 0, 0, 0, 0, 255, 30] ...
+(2) dimension chi(1) = 855   sum mult*deg = 855   <chi,chi> = 105   sum mult^2 = 105
+(2) constituents (degree, multiplicity): [(10, 1), (10, 1), (10, 1), (10, 1), (10, 1), (10, 1), (10, 1), (10, 1), (10, 1), (10, 1), (10, 1), (10, 1), (10, 1), (10, 1), (10, 1), (11, 1), (11, 1), (11, 1), (11, 1), (11, 1), (11, 2), (11, 2), (11, 2), (11, 2), (11, 2), (12, 1), (12, 1), (12, 1), (12, 1), (12, 1), (12, 1), (12, 1), (12, 1), (12, 1), (12, 1), (12, 1), (12, 1), (12, 1), (12, 1), (12, 1), (12, 1), (12, 1), (12, 1), (12, 1), (12, 1), (12, 1), (12, 1), (12, 1), (12, 1), (12, 1), (12, 2), (12, 2), (12, 2), (12, 2), (12, 2), (12, 2), (12, 2), (12, 2), (12, 2), (12, 2)]
+    linear (degree 1): distinct = 0  multiplicities = Any[]
+    cuspidal (degree 10): distinct = 15  multiplicities = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    twisted Steinberg (degree 11): distinct = 10  multiplicities = [1, 1, 1, 1, 1, 2, 2, 2, 2, 2]
+    principal series (degree 12): distinct = 35  multiplicities = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]
+    twisted Steinberg by parity of chi: even chi multiplicities = [1, 1, 1, 1, 1]   odd chi multiplicities = [2, 2, 2, 2, 2]   (5 even and 5 odd characters exist)
